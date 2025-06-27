@@ -3,7 +3,8 @@ import csv
 import time
 from datetime import datetime, timezone
 
-API_KEY = "cae48f2d7db01e9403cce10a083597c6e3b49696"
+# TODO: add your key here
+API_KEY = "insert_your_key"
 COUNTRY = "IT"
 REGION = "eu"
 SHOP = 61
@@ -87,7 +88,7 @@ def barra_di_caricamento(iterazione, totale, lunghezza=30):
 
 # === ESECUZIONE ===
 
-with open('giochi.txt', 'r', encoding='utf-8') as file:
+with open('games.txt', 'r', encoding='utf-8') as file:
     names = [riga.strip() for riga in file]
 
 initCSV(CSV_FILE_NAME)
