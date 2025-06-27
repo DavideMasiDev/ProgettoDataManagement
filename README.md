@@ -41,13 +41,6 @@ cd ProgettoDataManagement
 
 ```
 
-- Install dependencies
-```
-
-pip install -r requirements.txt
-
-```
-
 - Edit games.txt to add or remove game titles
 
 - Run the scraper
