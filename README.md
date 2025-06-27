@@ -7,11 +7,6 @@ This scraper leverages the official **IsThereAnyDeal API** to build a complete *
 ## 🔍 Description
 
 This tool queries the `games/history/v2` endpoint of the IsThereAnyDeal API to collect and store historical price data of video games.  
-Useful for:
-
-- Tracking price trends over time
-- Building datasets for analysis or machine learning
-- Monitoring sales and deals automatically
 
 ## 📦 Output
 
@@ -41,8 +36,8 @@ The scraper generates a structured dataset (a CSV file) containing:
 - Clone the repository
 ```
 
-git clone https://github.com/tuo-utente/isthereanydeal-scraper.git
-cd isthereanydeal-scraper
+git clone https://github.com/DavideMasiDev/ProgettoDataManagement.git
+cd ProgettoDataManagement
 
 ```
 
@@ -58,6 +53,6 @@ pip install -r requirements.txt
 - Run the scraper
 ```
 
-python scrape.py
+python scraping.py
 
 ```
