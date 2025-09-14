@@ -32,7 +32,6 @@ def get_price_history(plain, release_date):
         "key": API_KEY,
         "id": plain,
         "country": COUNTRY,
-        "shops": [SHOP],
         "since": release_date
     }
     r = requests.get(url, params=params)
@@ -49,7 +48,8 @@ def initCSV(filename):
             "price",
             "deal",
             "regular_price",
-            "currency"
+            "currency",
+            "shop"
         ])
     print(f"[✓] Creato nuovo file CSV {filename}")
 
@@ -64,7 +64,8 @@ def save_to_csv(price_data, filename, game_name):
                 entry["deal"]["price"]["amount"],
                 entry["deal"]["cut"],
                 entry["deal"]["regular"]["amount"],
-                entry["deal"]["price"]["currency"]
+                entry["deal"]["price"]["currency"],
+                entry["shop"]["name"]
             ])
     print(f"[✓] Dati salvati in {filename}")
 
