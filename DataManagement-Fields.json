@@ -1,0 +1,59 @@
+{
+	"raw_data": {
+		"steam_appid": "number",
+		"type": "string",
+		"name": "string",
+		"fullgame": "number",
+		"pc_requirements": {
+			"minimum": "string",
+			"recommended": "stirng"
+		}
+	},
+    "released_games": {
+        "name": "string",
+        "steam_appid": "number",
+        "short_description": "string",
+        "required_age": "string",
+        "controller_support": "string",
+        "supported_languages": "string",
+        "developers": "string",
+        "publishers": "string",
+        "platforms": "string",
+        "categories": "string",
+        "genres": "string",
+        "release_date": "date",
+        "followers": "number",
+        "estimated_wishlists": "string",
+        "tags": "string",
+        "price": "number",
+        "estimated_revenue": "string",
+        "estimated_units": "string",
+		"currency": "string",
+        "owners": "string",
+        "average_forever": "number",
+        "average_2weeks": "number",
+        "median_forever": "number",
+        "median_2weeks": "number",
+        "concurrent_users": "number",
+        "total_positive": "number",
+        "total_negative": "number",
+        "total_reviews": "number",
+        "demo_appids": "string"
+    },
+	"game_player_region": {
+		"steam_appid": "number",
+		"player_steamid": "number",
+		"region": "string",
+		"country_code": "string"
+	},
+	"price_history": {
+		"steam_appid": "number",
+		"name": "string",
+		"timestamp": "string",
+		"price": "number",
+		"deal": "number",
+		"regular_price": "number",
+		"currency": "string",
+		"shop": "string"
+	}
+}
