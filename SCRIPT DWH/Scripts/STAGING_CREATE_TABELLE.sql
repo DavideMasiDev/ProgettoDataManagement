@@ -1,5 +1,10 @@
+drop table if exists "STAGING".raw_data;
+drop table if exists "STAGING".released_game;
+drop table if exists "STAGING".game_player_region;
+drop table if exists "STAGING".price_history;
+
 create table if not exists "STAGING".raw_data (
-	raw_data_pk bigint primary key,
+	raw_data_pk bigserial primary key,
 	steam_appid int not null,
 	name text not null,
 	type varchar(4) not null, 
@@ -7,7 +12,7 @@ create table if not exists "STAGING".raw_data (
 );
 
 create table if not exists "STAGING".released_game (
-	released_game_pk bigint primary key,
+	released_game_pk bigserial primary key,
 	name text not null,
 	steam_appid int not null,
 	short_description text,
@@ -23,7 +28,7 @@ create table if not exists "STAGING".released_game (
 	followers text,
 	estimated_wishlists text,
 	tags text,
-	price number,
+	price numeric,
 	estimated_revenue text,
 	estimated_units text,
 	currency text,
@@ -35,11 +40,11 @@ create table if not exists "STAGING".released_game (
 	concurrent_users int,
 	total_positive int,
 	total_negative int,
-	total_reviews int,
+	total_reviews int
 );
 
 create table if not exists "STAGING".game_player_region (
-	game_player_region_pk bigint primary key,
+	game_player_region_pk bigserial primary key,
 	steam_appid int not null,
 	player_steamid int not null,
 	region varchar(50) not null,
@@ -47,13 +52,13 @@ create table if not exists "STAGING".game_player_region (
 );
 
 create table if not exists "STAGING".price_history (
-	price_history_pk bigint primary key,
+	price_history_pk bigint bigserial key,
 	steam_appid int not null,
 	name text not null,
 	timestamp date not null,
-	price number not null,
-	deal number not null,
-	regular_price number not null,
-	currency number not null,
+	price numeric not null,
+	deal numeric not null,
+	regular_price numeric not null,
+	currency numeric not null,
 	shop text not null
 );
