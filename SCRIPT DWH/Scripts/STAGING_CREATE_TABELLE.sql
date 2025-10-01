@@ -1,0 +1,59 @@
+create table if not exists "STAGING".raw_data (
+	raw_data_pk bigint primary key,
+	steam_appid int not null,
+	name text not null,
+	type varchar(4) not null, 
+	fullgame int
+);
+
+create table if not exists "STAGING".released_game (
+	released_game_pk bigint primary key,
+	name text not null,
+	steam_appid int not null,
+	short_description text,
+	required_age varchar(2),
+	controller_support bool,
+	supported_languages text,
+	developers text,
+	publishers text,
+	platforms text,
+	categories text,
+	genres text,
+	release_date date not null,
+	followers text,
+	estimated_wishlists text,
+	tags text,
+	price number,
+	estimated_revenue text,
+	estimated_units text,
+	currency text,
+	owners text,
+	average_forever int,
+	average_2weeks int,
+	median_forever int,
+	median_2weeks int,
+	concurrent_users int,
+	total_positive int,
+	total_negative int,
+	total_reviews int,
+);
+
+create table if not exists "STAGING".game_player_region (
+	game_player_region_pk bigint primary key,
+	steam_appid int not null,
+	player_steamid int not null,
+	region varchar(50) not null,
+	country_code char(2) not null
+);
+
+create table if not exists "STAGING".price_history (
+	price_history_pk bigint primary key,
+	steam_appid int not null,
+	name text not null,
+	timestamp date not null,
+	price number not null,
+	deal number not null,
+	regular_price number not null,
+	currency number not null,
+	shop text not null
+);
