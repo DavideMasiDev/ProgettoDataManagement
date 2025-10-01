@@ -1,47 +1,47 @@
-create table "DWH"."DATE" (
-	"DATE_PK" int primary key,
-	"FULL_DATE" timestamp not null,
-	"YEAR" int not null,
-	"MONTH" int not null,
-	"DAY" int not null
+create table "DWH".date (
+	date_pk int primary key,
+	full_date timestamp not null,
+	year int not null,
+	month int not null,
+	day int not null
 );
 
-create table "DWH"."STEAM_GAME" (
-	"STEAM_GAME_PK" int primary key, -- App ID Steam
-	"GAME_NAME" text not null,
-	"TYPE" text not null,
-	"FULLGAME" text,
-	"RELEASE_DATE_PK" int not null references "DWH"."DATE" ("DATE_PK")  -- PK to date
+create table "DWH".steam_game (
+	steam_game_pk int primary key, -- App ID Steam
+	game_name text not null,
+	type text not null,
+	fullgame text,
+	release_date_pk int not null references "DWH".date ("date_pk")  -- PK to date
 );
 
-create table "DWH"."GENRE" (
-	"GENRE_PK" int primary key,
-	"GENRE_NAME" text not null
+create table "DWH".genre (
+	genre_pk int primary key,
+	genre_name text not null
 );
 
-create table "DWH"."DEVELOPER" (
-	"DEVELOPER_PK" int primary key,
-	"DEVELOPER_NAME" text not null
+create table "DWH".developer (
+	developer_pk int primary key,
+	developer_name text not null
 );
 
-create table "DWH"."BRIDGE_GENRE" (
-	"STEAM_GAME_PK" int not null,
-	"GENRE_PK" int not null
+create table "DWH".bridge_genre (
+	steam_game_pk int not null,
+	genre_pk int not null
 );
 
-create table "DWH"."BRIDGE_DEVELOPER" (
-	"STEAM_GAME_PK" int not null,
+create table "DWH".bridge_developer (
+	steam_game_pk int not null,
 	"DEVELOPER_PK" int not null
 );
 
-create table "DWH"."SHOP" (
-	"SHOP_PK" int primary key
-	"SHOP_NAME" text not null
+create table "DWH".shop (
+	shop_pk int primary key
+	shop_name text not null
 );
 
-create table "DWH"."CURRENCY" (
-	"CURRECY_PK" int primary key,
-	"CURRENCY_NAME" text not null,
-	"CURRECY_CODE" char(3) not null,
+create table "DWH".currency (
+	currency_pk int primary key,
+	currency_name text not null,
+	currency_code char(3) not null,
 )
 

@@ -5,7 +5,7 @@ drop table if exists "STAGING".price_history;
 
 create table if not exists "STAGING".raw_data (
 	raw_data_pk bigserial primary key,
-	steam_appid int not null,
+	steam_appid bigint not null,
 	name text not null,
 	type varchar(4) not null, 
 	fullgame int
@@ -14,7 +14,7 @@ create table if not exists "STAGING".raw_data (
 create table if not exists "STAGING".released_game (
 	released_game_pk bigserial primary key,
 	name text not null,
-	steam_appid int not null,
+	steam_appid bigint not null,
 	short_description text,
 	required_age varchar(2),
 	controller_support bool,
@@ -45,15 +45,15 @@ create table if not exists "STAGING".released_game (
 
 create table if not exists "STAGING".game_player_region (
 	game_player_region_pk bigserial primary key,
-	steam_appid int not null,
-	player_steamid int not null,
+	steam_appid bigint not null,
+	player_steamid bigint not null,
 	region varchar(50) not null,
 	country_code char(2) not null
 );
 
 create table if not exists "STAGING".price_history (
-	price_history_pk bigint bigserial key,
-	steam_appid int not null,
+	price_history_pk bigserial primary key,
+	steam_appid bigint not null,
 	name text not null,
 	timestamp date not null,
 	price numeric not null,
