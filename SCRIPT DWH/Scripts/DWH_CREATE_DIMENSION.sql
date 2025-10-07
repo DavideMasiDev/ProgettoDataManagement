@@ -16,7 +16,10 @@ create table "DWH".date (
 	full_date timestamp not null,
 	year int not null,
 	month int not null,
-	day int not null
+	day int not null,
+	day_of_week int,
+	day_name text,
+	month_name text
 );
 
 create table "DWH".steam_game (
