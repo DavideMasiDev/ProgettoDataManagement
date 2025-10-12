@@ -2,8 +2,6 @@ import pandas as pd
 import re
 from ETL.utils.db_utils import insert_rows
 
-RELEASED_GAMES_SOURCE = "raw_sources/aug-25-released-games.csv"
-RELEASED_DLCS_SOURCE = "raw_sources/aug-25-released-dlcs.csv"
 SCHEMA_NAME = "STAGING"
 
 # Normalizza i valori stringa "undefined", "n/a", "none", "null", "nan" → None
@@ -87,9 +85,9 @@ def load_released_games_to_db(csv_path: str, schema_name:str, table_name: str = 
 
     insert_rows(schema_name, table_name, df)
 
-def load_records():
+def load_records(input_path_game, input_path_dlc):
     print(f"Carico i giochi rilasciati")
-    load_released_games_to_db(RELEASED_GAMES_SOURCE, SCHEMA_NAME)
+    load_released_games_to_db(input_path_game, SCHEMA_NAME)
     print(f"\n--------------------\n")
     print(f"Carico i dlc rilasciati")
-    load_released_games_to_db(RELEASED_DLCS_SOURCE, SCHEMA_NAME)
+    load_released_games_to_db(input_path_dlc, SCHEMA_NAME)

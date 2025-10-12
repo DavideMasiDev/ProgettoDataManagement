@@ -4,17 +4,19 @@ import pandas as pd
 from tqdm import tqdm
 from ETL.utils.db_utils import insert_rows
 
-INPUT_FOLDER = "raw_sources/aug-25-raw-data/raw"
 TABLE_NAME = "raw_data"
 SCHEMA_NAME = "STAGING"
 
 def load_records(input_path):
     records = []
+    games = []
+
     files = [f for f in os.listdir(input_path) if f.endswith(".json")]
     for filename in tqdm(files, desc="Processing JSON files", unit="file"):
         filepath = os.path.join(input_path, filename)
         with open(filepath, "r", encoding="utf-8") as f:
             data = json.load(f)
+
 
         for appid, game in data.items():
             try:
@@ -37,6 +39,8 @@ def load_records(input_path):
                         record["fullgame"] = None
 
                     records.append(record)
+                    games.append({"steam_appid": appid, "name": game.get("name")})
+
             except Exception as e:
                 # log minimo: continua con gli altri record
                 print(f"Warning parsing appid {appid}: {e}")
@@ -45,4 +49,4 @@ def load_records(input_path):
 
     insert_rows(SCHEMA_NAME, TABLE_NAME, records)
 
-    return None
+    return games

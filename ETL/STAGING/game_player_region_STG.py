@@ -3,7 +3,6 @@ import pandas as pd
 from tqdm import tqdm
 from ETL.utils.db_utils import insert_rows
 
-INPUT_FILE = "../raw_sources/aug-25-game-player-regions.json"
 TABLE_NAME = "game_player_region"
 SCHEMA_NAME = "STAGING"
 
