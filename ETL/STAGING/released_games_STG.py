@@ -1,8 +1,7 @@
 import pandas as pd
 import re
-from sqlalchemy import create_engine, text
+from ETL.utils.db_utils import insert_rows
 
-DB_URI = "postgresql+psycopg2://postgres:postgres@localhost:5432/steamdb"
 RELEASED_GAMES_SOURCE = "raw_sources/aug-25-released-games.csv"
 RELEASED_DLCS_SOURCE = "raw_sources/aug-25-released-dlcs.csv"
 SCHEMA_NAME = "STAGING"
@@ -15,7 +14,7 @@ def normalize_undefined(val):
             return None
     return val
 
-def load_released_games_to_db(csv_path: str, db_uri: str, schema_name:str, table_name: str = "released_game") -> None:
+def load_released_games_to_db(csv_path: str, schema_name:str, table_name: str = "released_game") -> None:
 
     print(f"* Lettura CSV da {csv_path}...")
     df = pd.read_csv(csv_path, low_memory=False)
@@ -86,22 +85,11 @@ def load_released_games_to_db(csv_path: str, db_uri: str, schema_name:str, table
     if skipped > 0:
         print(f"* Ignorati {skipped} record con valori NULL nei campi NOT NULL.")
 
-    # Connessione al DB
-    print("* Connessione a Postgres...")
-    engine = create_engine(db_uri)
+    insert_rows(schema_name, table_name, df)
 
-    # Inserimento dati
-    print(f"* Inserimento di {len(df)} record nella tabella '{table_name}'...")
-    df.to_sql(table_name, engine, schema=schema_name, if_exists="append", index=False, chunksize=5000)
-    print(f"* Completato: {len(df)} record inseriti in '{table_name}'.")
-
-
-# ============================
-# MAIN
-# ============================
-if __name__ == "__main__":
+def load_records():
     print(f"Carico i giochi rilasciati")
-    load_released_games_to_db(RELEASED_GAMES_SOURCE, DB_URI, SCHEMA_NAME)
+    load_released_games_to_db(RELEASED_GAMES_SOURCE, SCHEMA_NAME)
     print(f"\n--------------------\n")
     print(f"Carico i dlc rilasciati")
-    load_released_games_to_db(RELEASED_DLCS_SOURCE, DB_URI, SCHEMA_NAME)
+    load_released_games_to_db(RELEASED_DLCS_SOURCE, SCHEMA_NAME)

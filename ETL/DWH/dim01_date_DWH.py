@@ -43,7 +43,7 @@ def load_records(start_date: datetime, end_date: datetime):
 
 def main():
     print("Loading DIM01_DATE_DWH...")
-    start_date = datetime(2000, 1, 1)
+    start_date = datetime(1950, 1, 1)
     end_date = datetime(2030, 12, 31)  
     load_records(start_date, end_date)
 

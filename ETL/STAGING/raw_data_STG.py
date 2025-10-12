@@ -1,14 +1,10 @@
 import json
 import os
 import pandas as pd
-from sqlalchemy import create_engine, text
 from tqdm import tqdm
-
-# Config Postgres
-DB_URI = "postgresql+psycopg2://postgres:postgres@localhost:5432/steamdb"
+from ETL.utils.db_utils import insert_rows
 
 INPUT_FOLDER = "raw_sources/aug-25-raw-data/raw"
-OUTPUT_FILE = "clean_sources/raw_data.csv"
 TABLE_NAME = "raw_data"
 SCHEMA_NAME = "STAGING"
 
@@ -44,25 +40,9 @@ def load_records(input_path):
             except Exception as e:
                 # log minimo: continua con gli altri record
                 print(f"Warning parsing appid {appid}: {e}")
-    return records
 
-def main():
-    # 1) Load and normalize
-    records = load_records(INPUT_FOLDER)
-    df = pd.DataFrame(records, columns=["steam_appid", "type", "name", "fullgame"])
-    print(f"* Records parsed: {len(df)}")
+    records = pd.DataFrame(records, columns=["steam_appid", "type", "name", "fullgame"])
 
-    # 2) Save CSV (staging)
-    df.to_csv(OUTPUT_FILE, index=False, encoding="utf-8")
-    print(f"* CSV creato: {OUTPUT_FILE}")
+    insert_rows(SCHEMA_NAME, TABLE_NAME, records)
 
-    # 3) Connect to Postgres
-    engine = create_engine(DB_URI)
-
-    # 4) Carico dati in Postgres
-    df.to_sql(TABLE_NAME, engine, schema=SCHEMA_NAME, if_exists="append", index=False, method="multi", chunksize=5000)
-    print(f"* Inseriti {len(df)} record nella tabella '{TABLE_NAME}'")
-
-
-if __name__ == "__main__":
-    main()
+    return None
