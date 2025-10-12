@@ -2,6 +2,7 @@ api_key.txt
 *.zip
 *.7z
 ETL/clean_sources/*
+ETL/raw_sources/*
 *.idea
 SCRIPT DWH/.dbeaver/*
 SCRIPT DWH/.project
