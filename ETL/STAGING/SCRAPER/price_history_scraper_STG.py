@@ -138,7 +138,7 @@ def barra_di_caricamento(iterazione, totale, start_time, lunghezza=30):
         print()
 
 # === ESECUZIONE ===
-def load_records(games=None):
+def load_records(games):
     if games is None:
         games = []
 
@@ -148,7 +148,7 @@ def load_records(games=None):
     start_time = time.time()
     for game in games:
 
-        if DEBUG: print(f"[i] Cerco 'plain' per: {game["name"]}")
+        if DEBUG: print(f"[i] Cerco 'plain' per: {game.get('name')}")
         plain = get_plain_from_name(game["name"], API_KEY)
         if not plain:
             if DEBUG: print("[!] Nessun 'plain' trovato per questo gioco.")

@@ -1,7 +1,7 @@
 from pandas import DataFrame
 from sqlalchemy import create_engine
 
-DB_URI = "postgresql+psycopg2://postgres:postgres@localhost:5432/steamdb"
+DB_URI = "postgresql+psycopg2://postgres:dm2025@localhost:5432/steamdb"
 
 def connect_db(db_uri):
     engine = create_engine(db_uri)

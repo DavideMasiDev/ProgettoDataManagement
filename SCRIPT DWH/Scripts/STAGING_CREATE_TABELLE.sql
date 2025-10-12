@@ -59,6 +59,6 @@ create table if not exists "STAGING".price_history (
 	price numeric not null,
 	deal numeric not null,
 	regular_price numeric not null,
-	currency numeric not null,
+	currency varchar(3) not null,
 	shop text not null
 );

@@ -1,10 +1,9 @@
 api_key.txt
 *.zip
 *.7z
-ETL/raw_sources/*
 ETL/clean_sources/*
 *.idea
 SCRIPT DWH/.dbeaver/*
 SCRIPT DWH/.project
-
+**/__pycache__/
 

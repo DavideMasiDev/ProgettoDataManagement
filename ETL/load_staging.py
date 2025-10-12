@@ -8,7 +8,7 @@ from STAGING.SCRAPER.price_history_scraper_STG import load_records as load_recor
 def load_staging(anno, mese):
 
     input_path_raw_data = "raw_sources/RAW_DATA/" + anno + "/" +  mese + "/raw"
-    input_path_game_player_region = "raw_sources/GAME_PLAYER_REGION/" + anno + "/" + mese + "/game_player_regions.csv"
+    input_path_game_player_region = "raw_sources/GAME_PLAYER_REGION/" + anno + "/" + mese + "/game_player_regions.json"
     input_path_released_game_game = "raw_sources/RELEASED_GAMES/" + anno + "/" + mese + "/game.csv"
     input_path_released_game_dlc = "raw_sources/RELEASED_GAMES/" + anno + "/" + mese + "/dlc.csv"
 

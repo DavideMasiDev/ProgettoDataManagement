@@ -1,6 +1,5 @@
 import sys
-
-from ETL.load_staging import load_staging
+from load_staging import load_staging
 
 
 def main():

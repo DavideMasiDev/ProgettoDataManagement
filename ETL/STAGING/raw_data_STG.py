@@ -2,7 +2,7 @@ import json
 import os
 import pandas as pd
 from tqdm import tqdm
-from ETL.utils.db_utils import insert_rows
+from utils.db_utils import insert_rows
 
 TABLE_NAME = "raw_data"
 SCHEMA_NAME = "STAGING"

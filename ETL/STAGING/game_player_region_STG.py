@@ -1,7 +1,7 @@
 import json
 import pandas as pd
 from tqdm import tqdm
-from ETL.utils.db_utils import insert_rows
+from utils.db_utils import insert_rows
 
 TABLE_NAME = "game_player_region"
 SCHEMA_NAME = "STAGING"

@@ -1,6 +1,6 @@
 import pandas as pd
 import re
-from ETL.utils.db_utils import insert_rows
+from utils.db_utils import insert_rows
 
 SCHEMA_NAME = "STAGING"
 
