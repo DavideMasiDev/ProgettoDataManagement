@@ -1,5 +1,4 @@
 from datetime import datetime, timedelta
-from sqlalchemy import create_engine, text
 import pandas as pd
 from utils.db_utils import insert_rows
 

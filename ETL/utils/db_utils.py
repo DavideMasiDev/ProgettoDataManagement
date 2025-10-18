@@ -18,3 +18,15 @@ def insert_rows(schema, table, records: DataFrame):
 
     return None
 
+def select_rows(query) -> DataFrame:
+
+    engine = connect_db(DB_URI)
+    connection = engine.connect()
+
+    query_result = connection.execute(query).fetchall()
+
+    result = DataFrame(query_result)
+    result.data = query_result[0].keys
+
+    return result
+
