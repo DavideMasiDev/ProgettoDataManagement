@@ -8,10 +8,10 @@ drop table if exists "DWH".developer;
 drop table if exists "DWH".shop;
 drop table if exists "DWH".currency;
 drop table if exists "DWH".steam_game;
-drop table if exists "DWH".date;
+drop table if exists "DWH"."date";
 drop table if exists "DWH".player;
 
-create table "DWH".date (
+create table "DWH"."date" (
 	date_pk bigserial primary key,
 	full_date timestamp not null,
 	year int not null,
