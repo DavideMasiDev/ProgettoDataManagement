@@ -16,8 +16,6 @@ def load_records():
 
     new_rows = find_new_records(staging_rows, dwh_rows, key_column='steam_appid')
 
-    print(new_rows)
-
     insert_rows("DWH", "steam_game", new_rows)
 
     return None
