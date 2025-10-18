@@ -27,7 +27,11 @@ def select_rows(query) -> DataFrame:
     columns_name = query_result.keys()
 
     result = DataFrame(query_result.fetchall())
-    result.columns = columns_name
+    if result.empty:
+        for elem in columns_name:
+            result[elem] = []
+    else:
+        result.columns = columns_name
 
     return result
 
