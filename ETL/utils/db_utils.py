@@ -1,4 +1,4 @@
-from pandas import DataFrame
+from pandas import DataFrame, merge
 from sqlalchemy import create_engine, text
 
 DB_URI = "postgresql+psycopg2://postgres:dm2025@localhost:5432/steamdb"
@@ -31,3 +31,22 @@ def select_rows(query) -> DataFrame:
 
     return result
 
+
+def find_new_records(df_staging, df_dwh, key_column):
+
+    if isinstance(key_column, str):
+        key_column = [key_column]
+
+    merged_df = merge(
+        df_staging,
+        df_dwh[key_column],
+        on=key_column,
+        how='left',
+        indicator=True
+    )
+
+    new_rows = merged_df[merged_df['_merge'] == 'left_only']
+
+    df_to_set = new_rows[df_staging.columns]
+
+    return df_to_set
