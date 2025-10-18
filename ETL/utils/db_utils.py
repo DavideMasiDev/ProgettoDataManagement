@@ -35,7 +35,6 @@ def select_rows(query) -> DataFrame:
 
     return result
 
-
 def find_new_records(df_staging, df_dwh, key_column):
 
     if isinstance(key_column, str):
