@@ -1,5 +1,5 @@
 from pandas import DataFrame
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 
 DB_URI = "postgresql+psycopg2://postgres:dm2025@localhost:5432/steamdb"
 
@@ -23,10 +23,11 @@ def select_rows(query) -> DataFrame:
     engine = connect_db(DB_URI)
     connection = engine.connect()
 
-    query_result = connection.execute(query).fetchall()
+    query_result = connection.execute(text(query))
+    columns_name = query_result.keys()
 
-    result = DataFrame(query_result)
-    result.data = query_result[0].keys
+    result = DataFrame(query_result.fetchall())
+    result.columns = columns_name
 
     return result
 

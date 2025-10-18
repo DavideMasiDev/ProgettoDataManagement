@@ -6,4 +6,13 @@ def load_records():
 
     currencies = select_rows(query)
 
+    print(currencies)
+
     return None
+
+
+def main():
+    load_records()
+
+if __name__ == '__main__':
+    main()
