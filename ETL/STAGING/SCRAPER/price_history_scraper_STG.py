@@ -6,8 +6,6 @@ from sqlalchemy import create_engine
 from datetime import datetime, timezone
 from utils.db_utils import connect_db, DB_URI
 
-# TODO: add your key here
-API_KEY = "your_api_key"
 SCHEMA_NAME = "STAGING"
 TABLE_NAME = "price_history"
 COUNTRY = "IT"
@@ -138,7 +136,7 @@ def barra_di_caricamento(iterazione, totale, start_time, lunghezza=30):
         print()
 
 # === ESECUZIONE ===
-def load_records(games):
+def load_records(games, primo_caricamento, api_key):
     if games is None:
         games = []
 
@@ -149,18 +147,18 @@ def load_records(games):
     for game in games:
 
         if DEBUG: print(f"[i] Cerco 'plain' per: {game.get('name')}")
-        plain = get_plain_from_name(game["name"], API_KEY)
+        plain = get_plain_from_name(game["name"], api_key)
         if not plain:
             if DEBUG: print("[!] Nessun 'plain' trovato per questo gioco.")
         else:
             if DEBUG: print(f"[i] Plain corrispondente: {plain}")
-            release_date = get_release_date(plain, API_KEY)
+            release_date = get_release_date(plain, api_key)
             if not release_date:
                 if DEBUG: print("[!] Nessuna data di rilascio trovata")
             else:
                 release_date = datetime.strptime(release_date, "%Y-%m-%d").replace(tzinfo=timezone.utc).isoformat()
                 if DEBUG: print(f"[i] Data di rilascio: {release_date}")
-                data = get_price_history(plain, release_date, API_KEY)
+                data = get_price_history(plain, release_date, api_key)
                 save_to_db(data, game["steam_appid"], game["name"], conn, SCHEMA_NAME, TABLE_NAME)
         barra_di_caricamento(index, totale_giochi, start_time)
         index += 1
