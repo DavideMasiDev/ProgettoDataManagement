@@ -53,3 +53,12 @@ def find_new_records(df_staging, df_dwh, key_column):
     df_to_set = new_rows[df_staging.columns]
 
     return df_to_set
+
+def truncate_table(schema, table):
+    engine = connect_db(DB_URI)
+    connection = engine.connect()
+
+    query = f'TRUNCATE TABLE "{schema}".{table} CONTINUE IDENTITY RESTRICT'
+
+    connection.execute(text(query))
+    connection.commit()

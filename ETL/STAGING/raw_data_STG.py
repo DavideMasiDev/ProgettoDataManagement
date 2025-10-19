@@ -2,7 +2,7 @@ import json
 import os
 import pandas as pd
 from tqdm import tqdm
-from utils.db_utils import insert_rows
+from utils.db_utils import insert_rows, truncate_table
 
 TABLE_NAME = "raw_data"
 SCHEMA_NAME = "STAGING"
@@ -46,6 +46,8 @@ def load_records(input_path):
                 print(f"Warning parsing appid {appid}: {e}")
 
     records = pd.DataFrame(records, columns=["steam_appid", "type", "name", "fullgame"])
+
+    truncate_table(SCHEMA_NAME, TABLE_NAME)
 
     insert_rows(SCHEMA_NAME, TABLE_NAME, records)
 

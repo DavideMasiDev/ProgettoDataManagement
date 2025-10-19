@@ -1,6 +1,6 @@
 import pandas as pd
 import re
-from utils.db_utils import insert_rows
+from utils.db_utils import insert_rows, truncate_table
 
 SCHEMA_NAME = "STAGING"
 
@@ -12,7 +12,7 @@ def normalize_undefined(val):
             return None
     return val
 
-def load_released_games_to_db(csv_path: str, schema_name:str, table_name: str = "released_game") -> None:
+def load_released_games_to_db(csv_path: str, schema_name:str, table_name: str = "released_game", truncate = False) -> None:
 
     print(f"* Lettura CSV da {csv_path}...")
     df = pd.read_csv(csv_path, low_memory=False)
@@ -83,11 +83,13 @@ def load_released_games_to_db(csv_path: str, schema_name:str, table_name: str = 
     if skipped > 0:
         print(f"* Ignorati {skipped} record con valori NULL nei campi NOT NULL.")
 
+    if truncate:
+        truncate_table(schema_name, table_name)
     insert_rows(schema_name, table_name, df)
 
 def load_records(input_path_game, input_path_dlc):
     print(f"Carico i giochi rilasciati")
-    load_released_games_to_db(input_path_game, SCHEMA_NAME)
+    load_released_games_to_db(input_path_game, SCHEMA_NAME, truncate= True)
     print(f"\n--------------------\n")
     print(f"Carico i dlc rilasciati")
     load_released_games_to_db(input_path_dlc, SCHEMA_NAME)

@@ -1,10 +1,10 @@
+import threading
 import requests
 import time
 import sys
 import pandas as pd
-from sqlalchemy import create_engine
 from datetime import datetime, timezone
-from utils.db_utils import connect_db, DB_URI
+from utils.db_utils import insert_rows, truncate_table
 
 SCHEMA_NAME = "STAGING"
 TABLE_NAME = "price_history"
@@ -12,9 +12,8 @@ COUNTRY = "IT"
 REGION = "eu"
 SHOP = 61
 TIMEOUT = 0.5
-DEBUG = False
+BATCH_SIZE = 10000
 
-# 1. Ottieni plain da IsThereAnyDeal via search
 def get_plain_from_name(name, api_key):
     url = "https://api.isthereanydeal.com/games/search/v1"
     params = {
@@ -28,7 +27,6 @@ def get_plain_from_name(name, api_key):
     else:
         return None
 
-# 2. Ottieni storico prezzi
 def get_price_history(plain, release_date, api_key):
     url = "https://api.isthereanydeal.com/games/history/v2"
     params = {
@@ -41,22 +39,14 @@ def get_price_history(plain, release_date, api_key):
     data = r.json()
     return data
 
-# 3. Inizializza connessione a DB
-def init_db_connection(db_uri):
-    # Connessione DB
-    engine = create_engine(db_uri)
-    return engine.connect()
+def save_batch_to_db(batch, schema_name, table_name):
+    df = pd.DataFrame(batch, columns=["steam_appid", "name", "timestamp", "price", "deal", "regular_price", "currency", "shop"])
+    insert_rows(schema_name, table_name, df)
 
-# 4. Salva a DB
-def save_to_db(data, steam_appid, game_name, conn, schema_name, table_name):
-    """
-    Inserisce i dati di prezzo nel database (schema STAGING.price_history)
-    """
+def format_records(data, steam_appid, game_name):
     if not data or len(data) == 0:
-        if DEBUG: print(f"[!] Nessun dato di prezzo per {game_name}")
         return
 
-    # Creo il record das caricare a DB
     records = []
     for deal in data:
         records.append({
@@ -70,24 +60,8 @@ def save_to_db(data, steam_appid, game_name, conn, schema_name, table_name):
             "shop": deal["shop"]["name"]
         })
 
-    df = pd.DataFrame(records, columns=["steam_appid", "name", "timestamp", "price", "deal", "regular_price", "currency", "shop"])
+    return records
 
-    # Inserisci nel DB
-    try:
-        df.to_sql(
-            table_name,
-            con=conn,
-            schema=schema_name,
-            if_exists="append",
-            index=False,
-            method="multi",
-            chunksize=5000
-        )
-        if DEBUG: print(f"[+] Inseriti {len(df)} record per {game_name}")
-    except Exception as e:
-        print(f"[!] Errore durante l'inserimento di {game_name}: {e}")
-
-# 5. Ottieni data rilascio
 def get_release_date(plain, api_key):
     url = "https://api.isthereanydeal.com/games/info/v2"
     params = {
@@ -98,68 +72,92 @@ def get_release_date(plain, api_key):
     data = r.json()
     return data["releaseDate"]
 
-# 6. Stampa percentuale progresso
-def barra_di_caricamento(iterazione, totale, start_time, lunghezza=30):
-    # Calcolo percentuale e barra
-    percentuale = int((iterazione / totale) * 100)
-    riempimento = int(lunghezza * iterazione // totale)
-    barra = '█' * riempimento + '-' * (lunghezza - riempimento)
+def format_time(seconds):
+    h, rem = divmod(int(seconds), 3600)
+    m, s = divmod(rem, 60)
+    return f"{h:02d}:{m:02d}:{s:02d}"
 
-    # Calcolo tempo trascorso e stimato
-    tempo_trascorso = time.time() - start_time
-    if iterazione > 0:
-        tempo_per_item = tempo_trascorso / iterazione
-        tempo_rimanente = tempo_per_item * (totale - iterazione)
+def print_loading_bar(iteration, total, start_time, bar_len=30):
+
+    percent = int((iteration / total) * 100)
+    fill = int(bar_len * iteration // total)
+    loading_bar = '█' * fill + '-' * (bar_len - fill)
+
+    time_elapsed = time.time() - start_time
+    if iteration > 0:
+        time_fot_item = time_elapsed / iteration
+        time_remaining  = time_fot_item * (total - iteration)
     else:
-        tempo_rimanente = 0
+        time_remaining  = 0
 
-    # Formatta il tempo in hh:mm:ss
-    def format_time(seconds):
-        h, rem = divmod(int(seconds), 3600)
-        m, s = divmod(rem, 60)
-        return f"{h:02d}:{m:02d}:{s:02d}"
+    time_elapsed_fmt = format_time(time_elapsed)
+    time_remaining_fmt = format_time(time_remaining)
 
-    tempo_trascorso_fmt = format_time(tempo_trascorso)
-    tempo_rimanente_fmt = format_time(tempo_rimanente)
-
-    # Output su una singola riga
     output = (
-        f"\r|{barra}| {percentuale:3d}% "
-        f"({iterazione}/{totale}) "
-        f"⏱️ {tempo_trascorso_fmt} elapsed, ⏳ {tempo_rimanente_fmt} left"
+        f"\r|{loading_bar}| {percent:3d}% "
+        f"({iteration}/{total}) "
+        f"⏱️ {time_elapsed_fmt} elapsed, ⏳ {time_remaining_fmt} left"
     )
     sys.stdout.write(output)
     sys.stdout.flush()
 
-    # A capo al completamento
-    if iterazione == totale or DEBUG:
+    if iteration == total:
         print()
 
-# === ESECUZIONE ===
+
 def load_records(games, primo_caricamento, api_key):
+    # TODO: Se primo caricamento true, la since deve essere la release_date,
+    #       altrimenti bisogna leggere la data dell'ultimo deal e partire da quella
     if games is None:
         games = []
-
-    conn = connect_db(DB_URI).connect()
     index = 0
     totale_giochi = len(games)
     start_time = time.time()
-    for game in games:
 
-        if DEBUG: print(f"[i] Cerco 'plain' per: {game.get('name')}")
+    current_batch = []
+    threads = []
+
+    truncate_table(SCHEMA_NAME, TABLE_NAME)
+
+    for game in games:
         plain = get_plain_from_name(game["name"], api_key)
-        if not plain:
-            if DEBUG: print("[!] Nessun 'plain' trovato per questo gioco.")
-        else:
-            if DEBUG: print(f"[i] Plain corrispondente: {plain}")
+
+        if plain:
             release_date = get_release_date(plain, api_key)
-            if not release_date:
-                if DEBUG: print("[!] Nessuna data di rilascio trovata")
-            else:
+
+            if release_date:
                 release_date = datetime.strptime(release_date, "%Y-%m-%d").replace(tzinfo=timezone.utc).isoformat()
-                if DEBUG: print(f"[i] Data di rilascio: {release_date}")
                 data = get_price_history(plain, release_date, api_key)
-                save_to_db(data, game["steam_appid"], game["name"], conn, SCHEMA_NAME, TABLE_NAME)
-        barra_di_caricamento(index, totale_giochi, start_time)
+                new_records = format_records(data, game["steam_appid"], game["name"])
+                if new_records:
+                    current_batch.extend(new_records)
+
+
+        if len(current_batch) >= BATCH_SIZE:
+            to_save = current_batch.copy()
+
+            t = threading.Thread(
+                target=save_batch_to_db,
+                args=(to_save, SCHEMA_NAME, TABLE_NAME)
+            )
+            t.start()
+            threads.append(t)
+            current_batch.clear()
+
+            active_threads = [t for t in threads if t.is_alive()]
+            threads = active_threads
+
+        print_loading_bar(index, totale_giochi, start_time)
         index += 1
         time.sleep(TIMEOUT)
+
+    if current_batch:
+        t = threading.Thread(
+            target=save_batch_to_db,
+            args=(current_batch, SCHEMA_NAME, TABLE_NAME)
+        )
+        t.start()
+        threads.append(t)
+
+    for t in threads:
+        t.join()
