@@ -43,12 +43,16 @@ create table "DWH".developer (
 
 create table "DWH".bridge_genre (
 	steam_game_pk bigint not null references "DWH".steam_game ("steam_game_pk"),
-	genre_pk bigint not null references "DWH".genre ("genre_pk")
+	genre_pk bigint not null references "DWH".genre ("genre_pk"),
+	dat_ini_val date not null,
+	dat_fin_val date not null
 );
 
 create table "DWH".bridge_developer (
 	steam_game_pk bigint not null references "DWH".steam_game ("steam_game_pk"),
-	developer_pk bigint not null references "DWH".developer ("developer_pk")
+	developer_pk bigint not null references "DWH".developer ("developer_pk"),
+	dat_ini_val date not null,
+	dat_fin_val date not null
 );
 
 create table "DWH".shop (
@@ -65,9 +69,47 @@ create table "DWH".currency (
 create table "DWH".player (
 	player_pk bigserial primary key,
 	player_steamid bigint not null,
-	region text not null
+	region text not null,
+	country_code varchar(2) not null
 );
 
 -- CREATE FATTI
+
+drop table if exists "DWH".deal_fact;
+drop table if exists "DWH".game_statistics_fact;
+drop table if exists "DWH".player_region_fact;
+
+-- variazioni di prezzo e sconti di un gioco Steam
+
+create table "DWH".deal_fact (
+	deal_fact_pk bigserial primary key,
+	deal_date_pk bigint not null,
+	steam_game_pk bigint not null,
+	currency_pk bigint not null,
+	shop_pk bigint not null
+);
+
+-- popolarità/qualità + distribuzione geografica di un gioco Steam
+
+create table "DWH".game_statistics_fact (
+	game_statistics_fact_pk bigserial primary key,
+	steam_game_pk bigint not null,
+	estimated_revenue numeric,
+	average_forever numeric,
+	total_positive_reviews numeric,
+	total_negative_reviews numeric,
+	estimated_wishlist numeric,
+	dat_ini_val date not null,
+	dat_fin_val date not null
+);
+
+
+create table "DWH".player_region_fact (
+	player_region_pk bigserial primary key,
+	player_pk bigint not null,
+	steam_game_pk bigint not null,
+	dat_ini_val date not null,
+	dat_fin_val date not null
+);
 
 
