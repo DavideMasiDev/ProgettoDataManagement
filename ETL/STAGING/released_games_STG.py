@@ -87,9 +87,15 @@ def load_released_games_to_db(csv_path: str, schema_name:str, table_name: str = 
         truncate_table(schema_name, table_name)
     insert_rows(schema_name, table_name, df)
 
-def load_records(input_path_game, input_path_dlc):
+def load_records(input_path_game, input_path_dlc, input_path_free_game, input_path_free_dlc, ):
     print(f"Carico i giochi rilasciati")
     load_released_games_to_db(input_path_game, SCHEMA_NAME, truncate= True)
-    print(f"\n--------------------\n")
+    print(f"\n------------------------\n")
     print(f"Carico i dlc rilasciati")
     load_released_games_to_db(input_path_dlc, SCHEMA_NAME)
+    print(f"\n------------------------\n")
+    print(f"Carico i giochi gratuiti rilasciati")
+    load_released_games_to_db(input_path_free_game, SCHEMA_NAME)
+    print(f"\n------------------------\n")
+    print(f"Carico i dlc gratuiti rilasciati")
+    load_released_games_to_db(input_path_free_dlc, SCHEMA_NAME)
