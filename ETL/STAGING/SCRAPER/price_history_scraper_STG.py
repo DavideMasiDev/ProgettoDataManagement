@@ -21,10 +21,20 @@ def get_plain_from_name(name, api_key):
         "title": name
     }
     r = requests.get(url, params=params)
-    results = r.json()
-    if results and results[0] and results[0]["id"]:
-        return results[0]["id"]
+    if r.ok:
+        try:
+            results = r.json()
+            if results and results[0] and results[0]["id"]:
+                return results[0]["id"]
+            else:
+                return None
+        except requests.exceptions.JSONDecodeError:
+            print(f'\n[ERROR] Could not parse plain of {name} as JSON.')
+            print(f'{r.text[:200]}')
+            return None
     else:
+        print(f'\n[ERROR] Could not get plain for {name}.')
+        print(f'\n{r.text[:200]}')
         return None
 
 def get_price_history(plain, release_date, api_key):
@@ -36,8 +46,21 @@ def get_price_history(plain, release_date, api_key):
         "since": release_date
     }
     r = requests.get(url, params=params)
-    data = r.json()
-    return data
+    if r.ok:
+        try:
+            data = r.json()
+            if data:
+                return data
+            else:
+                return None
+        except requests.exceptions.JSONDecodeError:
+            print(f'\n[ERROR] Could not parse as JSON the price history for plain code: {plain}.')
+            print(f'\n{r.text[:200]}')
+            return None
+    else:
+        print(f'\n[ERROR] Could not get price history for plain code: {plain}.')
+        print(f'\n{r.text[:200]}')
+        return None
 
 def save_batch_to_db(batch, schema_name, table_name):
     df = pd.DataFrame(batch, columns=["steam_appid", "name", "timestamp", "price", "deal", "regular_price", "currency", "shop"])
@@ -45,7 +68,7 @@ def save_batch_to_db(batch, schema_name, table_name):
 
 def format_records(data, steam_appid, game_name):
     if not data or len(data) == 0:
-        return
+        return None
 
     records = []
     for deal in data:
@@ -128,9 +151,10 @@ def load_records(games, primo_caricamento, api_key):
             if release_date:
                 release_date = datetime.strptime(release_date, "%Y-%m-%d").replace(tzinfo=timezone.utc).isoformat()
                 data = get_price_history(plain, release_date, api_key)
-                new_records = format_records(data, game["steam_appid"], game["name"])
-                if new_records:
-                    current_batch.extend(new_records)
+                if data:
+                    new_records = format_records(data, game["steam_appid"], game["name"])
+                    if new_records:
+                        current_batch.extend(new_records)
 
 
         if len(current_batch) >= BATCH_SIZE:
