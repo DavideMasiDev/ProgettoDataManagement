@@ -62,3 +62,9 @@ def truncate_table(schema, table):
 
     connection.execute(text(query))
     connection.commit()
+
+def update_table(update_query):
+    engine = connect_db(DB_URI)
+    connection = engine.connect()
+    connection.execute(text(update_query))
+    connection.commit()
