@@ -12,6 +12,32 @@ def normalize_undefined(val):
             return None
     return val
 
+def clean_developer_string(dev_string, main_developers):
+    pattern_text = r"(\b(" + "|".join(main_developers) + r")\b)[\s,].+"
+    replacement_text = r"\1"
+    developer_list = dev_string.split(';')
+    cleaned_list = []
+
+    for dev in developer_list:
+        dev = dev.split(', in collaboration with', 1)[0]
+        dev_trimmed = dev.strip()
+        if dev_trimmed == 'Ubisoft':
+            dev_trimmed.replace('-', '')
+        cleaned_dev = re.sub(pattern_text, replacement_text, dev_trimmed, flags=re.IGNORECASE)
+        cleaned_dev = (
+            cleaned_dev
+            .replace('Inc.', 'Inc')
+            .replace('Co.,', 'Co.')
+            .title()
+            .strip()
+       )
+
+
+        if cleaned_dev not in cleaned_list:
+            cleaned_list.append(cleaned_dev)
+
+    return ";".join(cleaned_list)
+
 def load_released_games_to_db(csv_path: str, schema_name:str, table_name: str = "released_game", truncate = False) -> None:
 
     print(f"* Lettura CSV da {csv_path}...")
@@ -72,6 +98,15 @@ def load_released_games_to_db(csv_path: str, schema_name:str, table_name: str = 
         )
         # Se stringa vuota dopo la pulizia, metti NULL
         df.loc[df["required_age"] == "", "required_age"] = None
+
+    # Uniformazione developers
+    if "developers" in df.columns:
+        main_developers = ['2K', 'Ubisoft', 'Vertigo Games', 'Rockstar', 'Reflections']
+        df["developers"] = (
+            df["developers"]
+            .astype(str)
+            .apply(lambda dev_string: clean_developer_string(dev_string, main_developers))
+        )
 
     # Rimuovi record con valori NULL nei campi obbligatori
     not_null_fields = ["name", "steam_appid", "release_date"]

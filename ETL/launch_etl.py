@@ -10,7 +10,7 @@ def main():
 
     if SCRAPER_API_KEY == "your_api_key":
         print(f"\n-------------------------------------------------------")
-        print(f"!ATTENZIONE! Inserire l'API-KEY nel file launch_etl.py!")
+        print(f"[ATTENZIONE] Inserire l'API-KEY nel file launch_etl.py!")
         print(f"-------------------------------------------------------\n")
         return
 

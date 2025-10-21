@@ -92,8 +92,22 @@ def get_release_date(plain, api_key):
         "id": plain
     }
     r = requests.get(url, params=params)
-    data = r.json()
-    return data["releaseDate"]
+    if r.ok:
+        try:
+            data = r.json()
+            if data:
+                data = r.json()
+                return data["releaseDate"]
+            else:
+                return None
+        except requests.exceptions.JSONDecodeError:
+            print(f'\n[ERROR] Could not parse as JSON the release date for plain code: {plain}.')
+            print(f'\n{r.text[:200]}')
+            return None
+    else:
+        print(f'\n[ERROR] Could not get release date for plain code: {plain}.')
+        print(f'\n{r.text[:200]}')
+        return None
 
 def format_time(seconds):
     h, rem = divmod(int(seconds), 3600)
