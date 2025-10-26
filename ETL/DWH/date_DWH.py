@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 import pandas as pd
-from utils.db_utils import insert_rows
+from utils.db_utils import insert_rows, find_new_records, select_rows
 
 def load_records(start_date: datetime, end_date: datetime):
     records = []
@@ -24,6 +24,10 @@ def load_records(start_date: datetime, end_date: datetime):
 
     # Load and normalize
     df = pd.DataFrame(records, columns=["full_date", "year", "month", "day", "day_of_week", "day_name", "month_name"])
-    print(f"* Records parsed: {len(df)}")
+
+    query = 'select full_date::date from "DWH".date'
+    date_dwh = select_rows(query)
+
+    df = find_new_records(df, date_dwh, ["full_date"] )
 
     insert_rows("DWH", "date", df)

@@ -19,8 +19,3 @@ def load_records():
     insert_rows("DWH", "steam_game", new_rows)
 
     return None
-
-def main():
-    load_records()
-if __name__ == '__main__':
-    main()

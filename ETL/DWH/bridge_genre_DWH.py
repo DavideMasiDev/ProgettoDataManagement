@@ -34,8 +34,6 @@ def load_records():
     bridge_genre_close = find_new_records(bridge_genre_df_dwh, bridge_genre_df, ['steam_game_pk', 'genre_pk'])
     bridge_genre_close_list = bridge_genre_close.values.tolist()
 
-    print(len(bridge_genre_close_list))
-
     for elem in bridge_genre_close_list:
         update_query = ('update "DWH".bridge_genre set dat_fin_val='+ "'" + datetime.date.today().strftime('%Y-%m-%d') + "'" +
                         ' where steam_game_pk = ' + str(elem[0]) + ' and genre_pk = ' + str(elem[1]))
@@ -44,9 +42,3 @@ def load_records():
 
 
     return None
-
-def main():
-    load_records()
-
-if __name__ == '__main__':
-    main()

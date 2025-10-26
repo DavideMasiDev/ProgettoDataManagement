@@ -34,8 +34,6 @@ def load_records():
     bridge_developer_close = find_new_records(bridge_developer_df_dwh, bridge_developer_df, ['steam_game_pk', 'developer_pk'])
     bridge_developer_close_list = bridge_developer_close.values.tolist()
 
-    print(len(bridge_developer_close_list))
-
     for elem in bridge_developer_close_list:
         update_query = ('update "DWH".bridge_developer set dat_fin_val=' + "'" + datetime.date.today().strftime('%Y-%m-%d') + "'" +
                         ' where steam_game_pk = ' + str(elem[0]) + ' and developer_pk = ' + str(elem[1]))
@@ -44,9 +42,3 @@ def load_records():
 
 
     return None
-
-def main():
-    load_records()
-
-if __name__ == '__main__':
-    main()
