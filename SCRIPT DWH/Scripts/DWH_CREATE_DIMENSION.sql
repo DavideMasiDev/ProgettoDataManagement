@@ -27,7 +27,7 @@ create table "DWH".steam_game (
 	steam_appid bigint not null,
 	game_name text not null,
 	type text not null,
-	fullgame text,
+	fullgame bigint,
 	release_date_pk int not null references "DWH".date ("date_pk")  -- PK to date
 );
 
@@ -86,7 +86,10 @@ create table "DWH".deal_fact (
 	deal_date_pk bigint not null,
 	steam_game_pk bigint not null,
 	currency_pk bigint not null,
-	shop_pk bigint not null
+	shop_pk bigint not null,
+	regular_price numeric not null,
+	deal numeric not null,
+	price numeric not null
 );
 
 -- popolarità/qualità + distribuzione geografica di un gioco Steam
