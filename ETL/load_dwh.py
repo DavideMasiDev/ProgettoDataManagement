@@ -7,6 +7,7 @@ from DWH.shop_DWH import load_records as load_record_shop
 from DWH.steam_game_DWH import load_records as load_record_steam_game
 from DWH.bridge_genre_DWH import load_records as load_record_bridge_genres
 from DWH.bridge_developer_DWH import load_records as load_record_bridge_developer
+from DWH.deal_fact_DWH import load_records as load_record_deal
 from datetime import datetime
 
 
@@ -31,6 +32,8 @@ def load_dwh(start_date, end_date):
     load_record_bridge_genres()
     print("Loading DWH bridge developer")
     load_record_bridge_developer()
+    print("Loading DWH deal fact")
+    load_record_deal()
 
     return None
 
