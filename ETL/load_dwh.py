@@ -8,11 +8,34 @@ from DWH.steam_game_DWH import load_records as load_record_steam_game
 from DWH.bridge_genre_DWH import load_records as load_record_bridge_genres
 from DWH.bridge_developer_DWH import load_records as load_record_bridge_developer
 from DWH.deal_fact_DWH import load_records as load_record_deal
+from DWH.game_statistics_fact import load_records as load_record_game_statistics_fact
 from datetime import datetime
+from calendar import monthrange
 
 
 
-def load_dwh(start_date, end_date):
+
+def load_dwh(anno, mese):
+
+    mapping_mese = {
+        'GENNAIO': '01',
+        'FEBBRAIO': '02',
+        'MARZO': '03',
+        'APRILE': '04',
+        'MAGGIO': '05',
+        'GIUGNO': '06',
+        'LUGLIO': '07',
+        'AGOSTO': '08',
+        'SETTEMBRE': '09',
+        'OTTOBRE': '10',
+        'NOVEMBRE': '11',
+        'DICEMBRE': '12',
+    }
+
+    last_day_month = monthrange(int(anno), int(mapping_mese[mese]))[1]
+
+    start_date = datetime.strptime('01/' + mapping_mese[mese] + '/' + anno, "%d/%m/%Y")
+    end_date = datetime.strptime(str(last_day_month) + '/' + mapping_mese[mese] + '/' + anno, "%d/%m/%Y")
 
     print("Loading DWH date")
     load_record_date(start_date, end_date)
@@ -34,15 +57,14 @@ def load_dwh(start_date, end_date):
     load_record_bridge_developer()
     print("Loading DWH deal fact")
     load_record_deal()
+    print("Loading DWH game statistics fact")
+    load_record_game_statistics_fact(start_date, end_date)
 
     return None
 
 
 def main():
-    start_date = datetime.strptime('01/01/2025', '%d/%m/%Y')
-    end_date = datetime.strptime('30/06/2025', '%d/%m/%Y')
-
-    load_dwh(start_date, end_date)
+    load_dwh('2025', 'AGOSTO')
 
 
 if __name__ == '__main__':
