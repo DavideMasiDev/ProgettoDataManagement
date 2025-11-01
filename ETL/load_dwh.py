@@ -9,6 +9,7 @@ from DWH.bridge_genre_DWH import load_records as load_record_bridge_genres
 from DWH.bridge_developer_DWH import load_records as load_record_bridge_developer
 from DWH.deal_fact_DWH import load_records as load_record_deal
 from DWH.game_statistics_fact import load_records as load_record_game_statistics_fact
+from DWH.player_region_fact_DWH import load_records as load_record_player_region_fact
 from datetime import datetime
 from calendar import monthrange
 
@@ -59,6 +60,8 @@ def load_dwh(anno, mese):
     load_record_deal()
     print("Loading DWH game statistics fact")
     load_record_game_statistics_fact(start_date, end_date)
+    print("Loading DWH player region fact")
+    load_record_player_region_fact()
 
     return None
 
