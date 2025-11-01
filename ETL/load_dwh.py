@@ -33,10 +33,31 @@ def load_dwh(anno, mese):
         'DICEMBRE': '12',
     }
 
+    mapping_mese_precedente = {
+        'GENNAIO': '12',
+        'FEBBRAIO': '01',
+        'MARZO': '02',
+        'APRILE': '03',
+        'MAGGIO': '04',
+        'GIUGNO': '05',
+        'LUGLIO': '06',
+        'AGOSTO': '07',
+        'SETTEMBRE': '08',
+        'OTTOBRE': '09',
+        'NOVEMBRE': '10',
+        'DICEMBRE': '11',
+    }
+
     last_day_month = monthrange(int(anno), int(mapping_mese[mese]))[1]
+    last_day_precedent_month = monthrange(int(anno), int(mapping_mese_precedente[mese]))[1]
 
     start_date = datetime.strptime('01/' + mapping_mese[mese] + '/' + anno, "%d/%m/%Y")
     end_date = datetime.strptime(str(last_day_month) + '/' + mapping_mese[mese] + '/' + anno, "%d/%m/%Y")
+
+    if mapping_mese_precedente[mese]!='12':
+        end_date_precedent_month = datetime.strptime(str(last_day_precedent_month) + '/' + mapping_mese_precedente[mese] + '/' + anno, "%d/%m/%Y")
+    else:
+        end_date_precedent_month = datetime.strptime(str(last_day_precedent_month) + '/' + mapping_mese_precedente[mese] + '/' + (anno-1), "%d/%m/%Y")
 
     print("Loading DWH date")
     load_record_date(start_date, end_date)
@@ -59,7 +80,7 @@ def load_dwh(anno, mese):
     print("Loading DWH deal fact")
     load_record_deal()
     print("Loading DWH game statistics fact")
-    load_record_game_statistics_fact(start_date, end_date)
+    load_record_game_statistics_fact(start_date, end_date_precedent_month)
     print("Loading DWH player region fact")
     load_record_player_region_fact()
 
