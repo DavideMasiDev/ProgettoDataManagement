@@ -101,7 +101,7 @@ create table "DWH".game_statistics_fact (
 	average_forever numeric,
 	total_positive_reviews numeric,
 	total_negative_reviews numeric,
-	estimated_wishlist numeric,
+	estimated_wishlists numeric,
 	dat_ini_val date not null,
 	dat_fin_val date not null
 );
