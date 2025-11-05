@@ -4,7 +4,7 @@ import time
 import sys
 import pandas as pd
 from datetime import datetime, timezone
-from utils.db_utils import insert_rows, truncate_table
+from utils.db_utils import insert_rows, truncate_table, select_rows
 
 SCHEMA_NAME = "STAGING"
 TABLE_NAME = "price_history"
@@ -12,7 +12,7 @@ COUNTRY = "IT"
 REGION = "eu"
 SHOP = 61
 TIMEOUT = 0.5
-BATCH_SIZE = 10000
+BATCH_SIZE = 1000
 
 def get_plain_from_name(name, api_key):
     url = "https://api.isthereanydeal.com/games/search/v1"
@@ -109,6 +109,30 @@ def get_release_date(plain, api_key):
         print(f'\n{r.text[:200]}')
         return None
 
+def get_last_dates_for_game():
+    query = ("select steam_appid, dt.full_date::date as \"timestamp\""
+             " from (select steam_appid, max(deal_date_pk) as ultimo_timestamp_pk"
+                    " from \"DWH\".deal_fact df"
+                    " join \"DWH\".steam_game sg on sg.steam_game_pk = df.steam_game_pk"
+                    " group by steam_appid order by steam_appid asc)"
+             " join \"DWH\".date dt on dt.date_pk = ultimo_timestamp_pk")
+
+    last_dates_for_game = select_rows(query)
+
+    if last_dates_for_game is not None and len(last_dates_for_game) > 0:
+        return last_dates_for_game.values.tolist()
+    else:
+        return []
+
+
+def get_last_date(steam_appid, dates_list: list):
+    for date in dates_list:
+        # date[0] contains the steam_appid, date[1] contains the timestamp
+        if str(date[0]) == steam_appid:
+            return date[1].strftime('%Y-%m-%d')
+
+    return None
+
 def format_time(seconds):
     h, rem = divmod(int(seconds), 3600)
     m, s = divmod(rem, 60)
@@ -156,15 +180,24 @@ def load_records(games, primo_caricamento, api_key):
 
     truncate_table(SCHEMA_NAME, TABLE_NAME)
 
+    last_dates_for_game = []
+
+    if not primo_caricamento:
+        last_dates_for_game = get_last_dates_for_game()
+
     for game in games:
         plain = get_plain_from_name(game["name"], api_key)
 
         if plain:
-            release_date = get_release_date(plain, api_key)
+            if primo_caricamento:
+                # start_date = get_release_date(plain, api_key)
+                start_date = '2024-01-01'
+            else:
+                start_date = get_last_date(game["steam_appid"], last_dates_for_game)
 
-            if release_date:
-                release_date = datetime.strptime(release_date, "%Y-%m-%d").replace(tzinfo=timezone.utc).isoformat()
-                data = get_price_history(plain, release_date, api_key)
+            if start_date is not None:
+                start_date = datetime.strptime(start_date, "%Y-%m-%d").replace(tzinfo=timezone.utc).isoformat()
+                data = get_price_history(plain, start_date, api_key)
                 if data:
                     new_records = format_records(data, game["steam_appid"], game["name"])
                     if new_records:

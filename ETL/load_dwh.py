@@ -16,7 +16,7 @@ from calendar import monthrange
 
 
 
-def load_dwh(anno, mese):
+def load_dwh(anno, mese, primo_caricamento):
 
     mapping_mese = {
         'GENNAIO': '01',
@@ -51,7 +51,10 @@ def load_dwh(anno, mese):
     last_day_month = monthrange(int(anno), int(mapping_mese[mese]))[1]
     last_day_precedent_month = monthrange(int(anno), int(mapping_mese_precedente[mese]))[1]
 
-    start_date = datetime.strptime('01/' + mapping_mese[mese] + '/' + anno, "%d/%m/%Y")
+    if primo_caricamento:
+        start_date = datetime.strptime('01/01/1950', "%d/%m/%Y")
+    else:
+        start_date = datetime.strptime('01/' + mapping_mese[mese] + '/' + anno, "%d/%m/%Y")
     end_date = datetime.strptime(str(last_day_month) + '/' + mapping_mese[mese] + '/' + anno, "%d/%m/%Y")
 
     if mapping_mese_precedente[mese]!='12':
@@ -88,7 +91,7 @@ def load_dwh(anno, mese):
 
 
 def main():
-    load_dwh('2025', 'AGOSTO')
+    load_dwh('2025', 'AGOSTO', True)
 
 
 if __name__ == '__main__':
