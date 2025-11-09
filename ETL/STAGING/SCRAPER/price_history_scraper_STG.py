@@ -110,12 +110,11 @@ def get_release_date(plain, api_key):
         return None
 
 def get_last_dates_for_game():
-    query = ("select steam_appid, dt.full_date::date as \"timestamp\""
-             " from (select steam_appid, max(deal_date_pk) as ultimo_timestamp_pk"
-                    " from \"DWH\".deal_fact df"
-                    " join \"DWH\".steam_game sg on sg.steam_game_pk = df.steam_game_pk"
-                    " group by steam_appid order by steam_appid asc)"
-             " join \"DWH\".date dt on dt.date_pk = ultimo_timestamp_pk")
+    query = ("select steam_appid, max(d.full_date)::date as timestamp"
+            " from \"DWH\".deal_fact df"
+            " join \"DWH\".steam_game sg on sg.steam_game_pk = df.steam_game_pk"
+            " join \"DWH\".date d on d.date_pk = df.deal_date_pk"
+            " group by steam_appid")
 
     last_dates_for_game = select_rows(query)
 
