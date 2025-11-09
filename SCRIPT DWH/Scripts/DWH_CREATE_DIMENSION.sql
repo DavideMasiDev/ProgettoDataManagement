@@ -3,11 +3,11 @@
 
 drop table if exists "DWH".bridge_genre;
 drop table if exists "DWH".bridge_developer;
-drop table if exists "DWH".genre;
-drop table if exists "DWH".developer;
+drop table if exists "DWH".genre cascade;
+drop table if exists "DWH".developer cascade;
 drop table if exists "DWH".shop;
 drop table if exists "DWH".currency;
-drop table if exists "DWH".steam_game;
+drop table if exists "DWH".steam_game cascade;
 drop table if exists "DWH"."date";
 drop table if exists "DWH".player;
 
