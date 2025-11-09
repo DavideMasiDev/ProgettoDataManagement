@@ -58,7 +58,7 @@ def truncate_table(schema, table):
     engine = connect_db(DB_URI)
     connection = engine.connect()
 
-    query = f'TRUNCATE TABLE "{schema}".{table} CONTINUE IDENTITY RESTRICT'
+    query = f'TRUNCATE TABLE "{schema}".{table} CASCADE'
 
     connection.execute(text(query))
     connection.commit()

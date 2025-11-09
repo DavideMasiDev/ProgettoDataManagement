@@ -23,7 +23,7 @@ def load_records(dat_ini_val, dat_fin_val):
         elem.append(dat_ini_val)
         elem.append('9999-12-31')
 
-    game_mai_inseriti = pd.DataFrame(game_mai_inseriti, columns = ['steam_game_pk', 'estimated_revenue', 'average_forever', 'total_positive_reviews', 'total_negative_reviews', 'estimated_wishlist', 'dat_ini_val', 'dat_fin_val'])
+    game_mai_inseriti = pd.DataFrame(game_mai_inseriti, columns = ['steam_game_pk', 'estimated_revenue', 'average_forever', 'total_positive_reviews', 'total_negative_reviews', 'estimated_wishlists', 'dat_ini_val', 'dat_fin_val'])
 
     insert_rows("DWH", "game_statistics_fact", game_mai_inseriti)
 

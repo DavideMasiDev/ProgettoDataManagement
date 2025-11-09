@@ -5,9 +5,20 @@ from DATAMART.currency_DM import load_records as load_records_currency
 from DATAMART.steam_game_DM import load_records as load_records_steam_game
 from DATAMART.player_DM import load_records as load_records_player
 from DATAMART.developer_DM import load_records as load_records_developer
+from utils.db_utils import truncate_table
 
 
 def load_datamart(data_inizio_periodo, data_fine_periodo):
+
+    truncate_table("DATAMART", "bridge_genre")
+    truncate_table("DATAMART", "bridge_developer")
+    truncate_table("DATAMART", "steam_game")
+    truncate_table("DATAMART", "developer")
+    truncate_table("DATAMART", "player")
+    truncate_table("DATAMART", "date")
+    truncate_table("DATAMART", "shop")
+    truncate_table("DATAMART", "currency")
+    truncate_table("DATAMART", "genre")
 
     # Caricamento tabelle statiche
 
