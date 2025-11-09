@@ -12,7 +12,7 @@ drop table if exists "DATAMART"."date";
 drop table if exists "DATAMART".player;
 
 create table "DATAMART"."date" (
-	date_pk bigserial primary key,
+	date_pk bigint primary key,
 	full_date timestamp not null,
 	year int not null,
 	month int not null,
@@ -23,7 +23,7 @@ create table "DATAMART"."date" (
 );
 
 create table "DATAMART".steam_game (
-	steam_game_pk bigserial primary key,
+	steam_game_pk bigint primary key,
 	steam_appid bigint not null,
 	game_name text not null,
 	type text not null,
@@ -32,12 +32,12 @@ create table "DATAMART".steam_game (
 );
 
 create table "DATAMART".genre (
-	genre_pk bigserial primary key,
+	genre_pk bigint primary key,
 	genre_name text not null
 );
 
 create table "DATAMART".developer (
-	developer_pk bigserial primary key,
+	developer_pk bigint primary key,
 	developer_name text not null
 );
 
@@ -56,18 +56,18 @@ create table "DATAMART".bridge_developer (
 );
 
 create table "DATAMART".shop (
-	shop_pk bigserial primary key,
+	shop_pk bigint primary key,
 	shop_name text not null
 );
 
 create table "DATAMART".currency (
-	currency_pk bigserial primary key,
+	currency_pk bigint primary key,
 	currency_name text not null,
 	currency_code char(3) not null
 );
 
 create table "DATAMART".player (
-	player_pk bigserial primary key,
+	player_pk bigint primary key,
 	player_steamid bigint not null,
 	region text not null,
 	country_code varchar(2) not null
@@ -82,7 +82,7 @@ drop table if exists "DATAMART".player_region_fact;
 -- variazioni di prezzo e sconti di un gioco Steam
 
 create table "DATAMART".deal_fact (
-	deal_fact_pk bigserial primary key,
+	deal_fact_pk bigint primary key,
 	deal_date_pk bigint not null,
 	steam_game_pk bigint not null,
 	currency_pk bigint not null,
@@ -95,7 +95,7 @@ create table "DATAMART".deal_fact (
 -- popolarità/qualità + distribuzione geografica di un gioco Steam
 
 create table "DATAMART".game_statistics_fact (
-	game_statistics_fact_pk bigserial primary key,
+	game_statistics_fact_pk bigint primary key,
 	steam_game_pk bigint not null,
 	estimated_revenue numeric,
 	average_forever numeric,
@@ -108,7 +108,7 @@ create table "DATAMART".game_statistics_fact (
 
 
 create table "DATAMART".player_region_fact (
-	player_region_pk bigserial primary key,
+	player_region_pk bigint primary key,
 	player_pk bigint not null,
 	steam_game_pk bigint not null,
 	dat_ini_val date not null,
