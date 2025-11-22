@@ -3,7 +3,7 @@ import pandas as pd
 
 def load_records():
 
-    query = 'select distinct genres from "STAGING".released_game'
+    query = 'select distinct tags from "STAGING".released_game'
     genres = select_rows(query)
 
     genres_list_to_split = genres.values.tolist()
@@ -24,7 +24,7 @@ def load_records():
     query = 'select genre_name from "DWH".genre'
     dwh_genres = select_rows(query)
 
-    shops = find_new_records(genres, dwh_genres, ['genre_name'])
+    genres = find_new_records(genres, dwh_genres, ['genre_name'])
 
     insert_rows("DWH", "genre", genres)
 

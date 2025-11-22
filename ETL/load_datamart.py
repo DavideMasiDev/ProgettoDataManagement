@@ -59,7 +59,7 @@ def load_datamart(data_inizio_periodo, data_fine_periodo):
 
 
 def main():
-    load_datamart('2025-01-01', '2025-01-31')
+    load_datamart('2025-08-01', '2025-08-31')
 
 if __name__ == "__main__":
     main()

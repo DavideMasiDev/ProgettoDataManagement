@@ -6,6 +6,10 @@ truncate table "DWH".genre cascade;
 truncate table "DWH".developer cascade;
 truncate table "DWH".steam_game cascade;
 truncate table "DWH".shop;
+truncate table "DWH".player_region_fact;
+truncate table "DWH".game_statistics_fact;
+truncate table "DWH".deal_fact;
+
 
 truncate table "DATAMART".currency;
 truncate table "DATAMART".player;
@@ -15,3 +19,6 @@ truncate table "DATAMART".genre cascade;
 truncate table "DATAMART".developer cascade;
 truncate table "DATAMART".steam_game cascade;
 truncate table "DATAMART".shop;
+truncate table "DATAMART".player_region_fact;
+truncate table "DATAMART".game_statistics_fact;
+truncate table "DATAMART".deal_fact;

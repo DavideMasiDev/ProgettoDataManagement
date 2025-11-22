@@ -4,7 +4,7 @@ import datetime
 
 def load_records():
 
-    query = ('select steam_game_pk, genres '
+    query = ('select steam_game_pk, tags '
              'from "STAGING".released_game rg '
              'join "DWH".steam_game sg on (rg.steam_appid = sg.steam_appid)')
     genres_per_game = select_rows(query)
