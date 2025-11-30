@@ -26,6 +26,9 @@ def load_datamart(data_inizio_periodo, data_fine_periodo):
     truncate_table("DATAMART", "shop")
     truncate_table("DATAMART", "currency")
     truncate_table("DATAMART", "genre")
+    truncate_table("DATAMART", "deal_fact")
+    truncate_table("DATAMART", "player_region_fact")
+    truncate_table("DATAMART", "game_statistics_fact")
 
     # Caricamento tabelle statiche
 
