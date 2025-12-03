@@ -10,30 +10,37 @@ def connect_db(db_uri):
 def insert_rows(schema, table, records: DataFrame):
 
     engine = connect_db(DB_URI)
-
-    try:
-        records.to_sql(table, engine, schema=schema, if_exists="append", index=False, method="multi", chunksize=5000)
-    except  Exception as e:
-        print("Errore durante il caricamento della tabella " + schema + "." + table + ":" + str(e))
+    with engine.connect() as connection:
+        try:
+            records.to_sql(table, connection, schema=schema, if_exists="append", index=False, method="multi", chunksize=5000)
+        except  Exception as e:
+            print("Errore durante il caricamento della tabella " + schema + "." + table + ":" + str(e))
 
     return None
 
-def select_rows(query) -> DataFrame:
+def select_rows(query) -> DataFrame | None:
 
     engine = connect_db(DB_URI)
-    connection = engine.connect()
 
-    query_result = connection.execute(text(query))
-    columns_name = query_result.keys()
+    with engine.connect() as connection:
 
-    result = DataFrame(query_result.fetchall())
-    if result.empty:
-        for elem in columns_name:
-            result[elem] = []
-    else:
-        result.columns = columns_name
+        try:
+            query_result = connection.execute(text(query))
+            columns_name = query_result.keys()
 
-    return result
+            result = DataFrame(query_result.fetchall())
+            if result.empty:
+                for elem in columns_name:
+                    result[elem] = []
+            else:
+                result.columns = columns_name
+
+            return result
+
+        except Exception as e:
+            print("Errore durante l' esecuzione della query: " + str(e))
+
+            return None
 
 def find_new_records(df_staging, df_dwh, key_column):
 

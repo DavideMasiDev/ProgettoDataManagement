@@ -166,8 +166,9 @@ def print_loading_bar(iteration, total, start_time, bar_len=30):
 
 
 def load_records(games, primo_caricamento, api_key):
-    # TODO: Se primo caricamento true, la since deve essere la release_date,
-    #       altrimenti bisogna leggere la data dell'ultimo deal e partire da quella
+
+    print('Avvio dello scraper per l\'acquisizione dello storico prezzi di ogni gioco.\n')
+
     if games is None:
         games = []
     index = 0
