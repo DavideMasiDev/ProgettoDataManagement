@@ -1,8 +1,9 @@
 import pandas as pd
 import re
-from utils.db_utils import insert_rows, truncate_table
+from utils.db_utils import insert_rows, truncate_table, select_rows
 
 SCHEMA_NAME = "STAGING"
+TABLE_NAME = "released_game"
 
 # Normalizza i valori stringa "undefined", "n/a", "none", "null", "nan" → None
 def normalize_undefined(val):
@@ -38,7 +39,47 @@ def clean_developer_string(dev_string, main_developers):
 
     return ";".join(cleaned_list)
 
-def load_released_games_to_db(csv_path: str, schema_name:str, table_name: str = "released_game", truncate = False) -> None:
+def remove_duplicates():
+    query = ('select distinct on (name)'
+             ' steam_appid,'
+             ' name,'
+             ' short_description,'
+             ' required_age,'
+             ' controller_support,'
+             ' supported_languages,'
+             ' developers,'
+             ' publishers,'
+             ' platforms,'
+             ' categories,'
+             ' genres,'
+             ' release_date,'
+             ' followers,'
+             ' estimated_wishlists,'
+             ' tags,'
+             ' price,'
+             ' estimated_revenue,'
+             ' estimated_units,'
+             ' currency,'
+             ' owners,'
+             ' average_forever,'
+             ' average_2weeks,'
+             ' median_forever,'
+             ' median_2weeks,'
+             ' concurrent_users,'
+             ' total_positive,'
+             ' total_negative,'
+             ' total_reviews'
+             ' from "STAGING".released_game'
+             ' order by name, steam_appid asc')
+    df = select_rows(query)
+
+    print(f"Dropping duplicated records from {TABLE_NAME} table")
+    truncate_table(SCHEMA_NAME, TABLE_NAME)
+
+    print(f"Inserting {len(df)} non-duplicates records into {TABLE_NAME} table")
+    insert_rows(SCHEMA_NAME, TABLE_NAME, df)
+
+def load_released_games_to_db(csv_path: str, truncate = False) -> None:
 
     print(f"* Lettura CSV da {csv_path}...")
     df = pd.read_csv(csv_path, low_memory=False)
@@ -112,6 +153,15 @@ def load_released_games_to_db(csv_path: str, schema_name:str, table_name: str = 
     not_null_fields = ["name", "steam_appid", "release_date"]
     before = len(df)
     df = df.dropna(subset=not_null_fields)
+
+    # Rimuovi record con stringhe vuote nei campi obbligatori
+    if 'name' in df.columns:
+        df = df[df['name'].astype(str).str.strip() != '']
+    if 'steam_appid' in df.columns:
+        df = df[df['steam_appid'].astype(str).str.strip() != '']
+    if 'release_date' in df.columns:
+        df = df[df['release_date'].astype(str).str.strip() != '']
+
     after = len(df)
     skipped = before - after
 
@@ -119,18 +169,23 @@ def load_released_games_to_db(csv_path: str, schema_name:str, table_name: str = 
         print(f"* Ignorati {skipped} record con valori NULL nei campi NOT NULL.")
 
     if truncate:
-        truncate_table(schema_name, table_name)
-    insert_rows(schema_name, table_name, df)
+        truncate_table(SCHEMA_NAME, TABLE_NAME)
+
+    insert_rows(SCHEMA_NAME, TABLE_NAME, df)
 
 def load_records(input_path_game, input_path_dlc, input_path_free_game, input_path_free_dlc, ):
     print(f"Carico i giochi rilasciati")
-    load_released_games_to_db(input_path_game, SCHEMA_NAME, truncate= True)
+    load_released_games_to_db(input_path_game, truncate= True)
     print(f"\n------------------------\n")
     print(f"Carico i dlc rilasciati")
-    load_released_games_to_db(input_path_dlc, SCHEMA_NAME)
+    load_released_games_to_db(input_path_dlc)
     print(f"\n------------------------\n")
     print(f"Carico i giochi gratuiti rilasciati")
-    load_released_games_to_db(input_path_free_game, SCHEMA_NAME)
+    load_released_games_to_db(input_path_free_game)
     print(f"\n------------------------\n")
     print(f"Carico i dlc gratuiti rilasciati")
-    load_released_games_to_db(input_path_free_dlc, SCHEMA_NAME)
+    load_released_games_to_db(input_path_free_dlc)
+
+    print(f"\n------------------------\n")
+
+    remove_duplicates()
