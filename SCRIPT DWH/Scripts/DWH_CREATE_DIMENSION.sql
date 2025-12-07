@@ -33,7 +33,8 @@ create table "DWH".steam_game (
 
 create table "DWH".genre (
 	genre_pk bigserial primary key,
-	genre_name text not null
+	genre_name text not NULL,
+	classification text
 );
 
 create table "DWH".developer (

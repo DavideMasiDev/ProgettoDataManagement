@@ -1,8 +1,13 @@
 from utils.db_utils import select_rows, insert_rows, find_new_records
 import pandas as pd
 
-def load_records():
 
+def classify_genre(genre):
+
+    classification = None
+    return [genre, classification]
+
+def load_records():
     query = 'select distinct tags from "STAGING".released_game'
     genres = select_rows(query)
 
@@ -16,6 +21,13 @@ def load_records():
                     genres_list.append(genre)
 
     genres = pd.DataFrame(genres_list, columns=["genre_name"])
+
+    # Classifichiamo i generi recuperando il mapping dalla tabella genre_classification
+
+    query = "select genre_name, classification from \"STAGING\".genre_classification"
+    classifications =  select_rows(query)
+
+    genres = pd.merge(genres, classifications, on="genre_name", how="left")
 
     # Recuperiamo i record già inseriti in DWH in modo da non creare duplicati nella tabella,
     # essendo quest'ultima solamente una tipologica.

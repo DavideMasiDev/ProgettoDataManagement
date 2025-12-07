@@ -2,7 +2,9 @@ api_key.txt
 *.zip
 *.7z
 ETL/clean_sources/*
-ETL/raw_sources/*
+ETL/raw_sources/GAME_PLAYER_REGION
+ETL/raw_sources/RAW_DATA
+ETL/raw_sources/RELEASED_GAMES
 *.idea
 SCRIPT DWH/.dbeaver/*
 SCRIPT DWH/.project

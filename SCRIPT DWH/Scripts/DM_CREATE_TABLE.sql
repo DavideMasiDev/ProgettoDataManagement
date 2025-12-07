@@ -33,7 +33,8 @@ create table "DATAMART".steam_game (
 
 create table "DATAMART".genre (
 	genre_pk bigint primary key,
-	genre_name text not null
+	genre_name text not NULL,
+	classification text
 );
 
 create table "DATAMART".developer (

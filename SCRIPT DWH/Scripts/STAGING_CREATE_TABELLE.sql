@@ -2,6 +2,7 @@ drop table if exists "STAGING".raw_data;
 drop table if exists "STAGING".released_game;
 drop table if exists "STAGING".game_player_region;
 drop table if exists "STAGING".price_history;
+drop table if exists "STAGING".genre_classification;
 
 create table if not exists "STAGING".raw_data (
 	raw_data_pk bigserial primary key,
@@ -62,3 +63,9 @@ create table if not exists "STAGING".price_history (
 	currency varchar(3) not null,
 	shop text not null
 );
+
+create table "STAGING".genre_classification (
+	genre_classification_pk bigserial primary key,
+	genre_name text not null,
+	classification text
+)

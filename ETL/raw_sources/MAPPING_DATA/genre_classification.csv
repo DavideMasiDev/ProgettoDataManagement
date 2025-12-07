@@ -1,0 +1,447 @@
+genre_name,classification
+1980s,MOODS
+1990's,MOODS
+2.5D,DIMENSIONS
+2D,DIMENSIONS
+2D Fighter,GENRE
+2D Platformer,GENRE
+360 Video,FEATURE
+3D,DIMENSIONS
+3D Fighter,GENRE
+3D Platformer,GENRE
+3D Vision,GENRE
+4 Player Local,PLAYERS
+4X,
+6DOF,
+8-bit Music,FEATURE
+Abstract,THEMES
+Action,TOP LEVEL GENRE
+Action-Adventure,GENRE
+Action Roguelike,GENRE
+Action RPG,GENRE
+Action RTS,GENRE
+Addictive,MOODS
+Adventure,TOP LEVEL GENRE
+Agriculture,THEMES
+Aliens,THEMES
+Alternate History,THEMES
+Ambient,THEMES
+America,THEMES
+Animation & Modeling,SOFTWARE
+Anime,THEMES
+Arcade,TOP LEVEL GENRE
+Archery,THEMES
+Arena Shooter,GENRE
+Artificial Intelligence,FEATURE
+Assassin,THEMES
+Asymmetric VR,HARDWARE
+Asynchronous Multiplayer,PLAYERS
+Atmospheric,MOODS
+ATV,
+Audio Production,SOFTWARE
+Auto Battler,GENRE
+Automation,THEMES
+Automobile Sim,GENRE
+Base Building,GENRE
+Baseball,THEMES
+Based On A Novel,THEMES
+Basketball,THEMES
+Battle Royale,TOP LEVEL GENRE
+Beat 'em up,GENRE
+Beautiful,MOODS
+Benchmark,SOFTWARE
+Bikes,THEMES
+Birds,THEMES
+Blood,THEMES
+BMX,THEMES
+Board Game,GENRE
+Boomer Shooter,GENRE
+Boss Rush,GENRE
+Bowling,THEMES
+Boxing,THEMES
+Building,THEMES
+Bullet Hell,GENRE
+Bullet Time,GENRE
+Capitalism,THEMES
+Card Battler,GENRE
+Card Game,GENRE
+Cartoon,VISUALS
+Cartoony,VISUALS
+Casual,MOODS
+Cats,THEMES
+Character Action Game,GENRE
+Character Customization,FEATURE
+Chess,GENRE
+Choices Matter,FEATURE
+Choose Your Own Adventure,FEATURE
+Cinematic,FEATURE
+City Builder,GENRE
+Class-Based,FEATURE
+Classic,GENRE
+Clicker,FEATURE
+Co-op,PLAYERS
+Co-op Campaign,PLAYERS
+Coding,THEMES
+Cold War,THEMES
+Collectathon,FEATURE
+Colony Sim,GENRE
+Colorful,VISUALS
+Combat,TOP LEVEL GENRE
+Combat Racing,GENRE
+Comedy,MOODS
+Comic Book,THEMES
+Competitive,MOODS
+Conspiracy,THEMES
+Controller,HARDWARE
+Conversation,THEMES
+Cooking,THEMES
+Cozy,MOODS
+Crafting,FEATURE
+Creature Collector,FEATURE
+Cricket,THEMES
+Crime,THEMES
+Crowdfunded,FUNDING
+CRPG,TOP LEVEL GENRE
+Cult Classic,THEMES
+Cute,MOODS
+Cyberpunk,THEMES
+Cycling,THEMES
+Dark,MOODS
+Dark Comedy,THEMES
+Dark Fantasy,THEMES
+Dark Humor,THEMES
+Dating Sim,GENRE
+Deckbuilding,GENRE
+Demons,THEMES
+Design & Illustration,SOFTWARE
+Destruction,THEMES
+Detective,THEMES
+Dice,THEMES
+Difficult,MOODS
+Dinosaurs,THEMES
+Diplomacy,THEMES
+Documentary,THEMES
+Dog,THEMES
+Dragons,THEMES
+Drama,MOODS
+Driving,THEMES
+Dungeon Crawler,GENRE
+Dungeons & Dragons,THEMES
+Dwarf,THEMES
+Dynamic Narration,FEATURE
+Dystopian ,THEMES
+Early Access,ASSESSMENTS
+Economy,THEMES
+Education,THEMES
+Electronic,THEMES
+Electronic Music,THEMES
+Elf,THEMES
+Emotional,MOODS
+Epic,MOODS
+Episodic,FEATURE
+Escape Room,GENRE
+eSports,FEATURE
+Experience,THEMES
+Experimental,MOODS
+Exploration,FEATURE
+Extraction Shooter,GENRE
+Faith,THEMES
+Family Friendly,MOODS
+Fantasy,THEMES
+Farming,THEMES
+Farming Sim,GENRE
+Fast-Paced,FEATURE
+Feature Film,FEATURE
+Female Protagonist,FEATURE
+Fighting,TOP LEVEL GENRE
+First-Person,VIEWPOINT
+Fishing,THEMES
+Flight,THEMES
+FMV,
+Football (American),GENRE
+Football (Soccer),GENRE
+Foreign,THEMES
+Fox,THEMES
+FPS,TOP LEVEL GENRE
+Free to Play,FUNDING
+Funny,MOODS
+Futuristic,THEMES
+Gambling,THEMES
+Game Development,THEMES
+GameMaker,GENRE
+Games Workshop,FEATURE
+Gaming,THEMES
+God Game,THEMES
+Golf,THEMES
+Gore,VISUALS
+Gothic,THEMES
+Grand Strategy,GENRE
+Great Soundtrack,FEATURE
+Grid-Based Movement,FEATURE
+Gun Customization,FEATURE
+Hack and Slash,TOP LEVEL GENRE
+Hacking,THEMES
+Hand-drawn,VISUALS
+Hardware,HARDWARE
+Heist,THEMES
+Hentai,THEMES
+Hero Shooter,GENRE
+Hex Grid,FEATURE
+Hidden Object,FEATURE
+Historical,THEMES
+Hobby Sim,GENRE
+Hockey,THEMES
+Horror,GENRE
+Horses,THEMES
+Hunting,THEMES
+Idler,GENRE
+Illuminati,THEMES
+Immersive,MOODS
+Immersive Sim,GENRE
+Indie,TOP LEVEL GENRE
+Instrumental Music,FEATURE
+Intentionally Awkward Controls,FEATURE
+Interactive Fiction,FEATURE
+Inventory Management,FEATURE
+Investigation,THEMES
+Isometric,VIEWPOINT
+Jet,THEMES
+Job Simulator,GENRE
+JRPG,TOP LEVEL GENRE
+Jump Scare,MOODS
+Kickstarter,FUNDING
+LEGO,THEMES
+Lemmings,THEMES
+Level Editor,FEATURE
+LGBTQ+,THEMES
+Life Sim,GENRE
+Linear,FEATURE
+Local Co-Op,PLAYER
+Local Multiplayer,PLAYER
+Logic,THEMES
+Loot,FEATURE
+Looter Shooter,GENRE
+Lore-Rich,FEATURE
+Lovecraftian,THEMES
+Magic,THEMES
+Mahjong,GENRE
+Management,FEATURE
+Mars,THEMES
+Martial Arts,THEMES
+Massively Multiplayer,PLAYER
+Match 3,PLAYER
+Mature,THEMES
+Mechs,THEMES
+Medical Sim,GENRE
+Medieval,THEMES
+Memes,THEMES
+Metroidvania,TOP LEVEL GENRE
+Military,THEMES
+Mini Golf,THEMES
+Minigames,FEATURE
+Minimalist,VISUALS
+Mining,THEMES
+MMORPG,TOP LEVEL GENRE
+MOBA,TOP LEVEL GENRE
+Mod,FEATURE
+Moddable,FEATURE
+Modern,VISUALS
+Motocross,THEMES
+Motorbike,THEMES
+Mouse only,FEATURE
+Movie,THEMES
+Multiplayer,PLAYER
+Multiple Endings,FEATURE
+Music,THEMES
+Music-Based Procedural Generation,FEATURE
+Musou,GENRE
+Mystery,THEMES
+Mystery Dungeon,THEMES
+Mythology,THEMES
+Narration,THEMES
+Narrative,FEATURE
+Nature,THEMES
+Naval,THEMES
+Naval Combat,THEMES
+Ninja,THEMES
+Noir,MOODS
+Nonlinear,FEATURE
+Nostalgia,MOODS
+NSFW,THEMES
+Nudity,THEMES
+Offroad,THEMES
+Old School,VISUALS
+On-Rails Shooter,GENRE
+Online Co-Op,PLAYER
+Open World,GENRE
+Open World Survival Craft,GENRE
+Otome,THEMES
+Outbreak Sim,GENRE
+Parkour,THEMES
+Parody ,THEMES
+Party,THEMES
+Party-Based RPG,GENRE
+Party Game,TOP LEVEL GENRE
+Perma Death,FEATURE
+Philosophical,THEMES
+Photo Editing,SOFTWARE
+Physics,FEATURE
+Pinball,THEMES
+Pirates,THEMES
+Pixel Graphics,VISUALS
+Platformer,GENRE
+Point & Click,TOP LEVEL GENRE
+Political,THEMES
+Political Sim,GENRE
+Politics,THEMES
+Pool,THEMES
+Post-apocalyptic,THEMES
+Precision Platformer,GENRE
+Procedural Generation,FEATURE
+Programming,THEMES
+Psychedelic,MOODS
+Psychological,MOODS
+Psychological Horror,GENRE
+Puzzle,TOP LEVEL GENRE
+Puzzle Platformer,GENRE
+PvE,FEATURE
+PvP,FEATURE
+Quick-Time Events,FEATURE
+Racing,TOP LEVEL GENRE
+Real-Time,FEATURE
+Real-Time with Pause,FEATURE
+Real Time Tactics,FEATURE
+Realistic,VISUALS
+Reboot,SOFTWARE
+Relaxing,MOODS
+Remake,SOFTWARE
+Replay Value,FEATURE
+Resource Management,FEATURE
+Retro,VISUALS
+Rhythm,GENRE
+Robots,THEMES
+Rock Music,THEMES
+Roguelike,TOP LEVEL GENRE
+Roguelike Deckbuilder,GENRE
+Roguelite,GENRE
+Roguevania,GENRE
+Romance,THEMES
+Rome,THEMES
+RPG,TOP LEVEL GENRE
+RPGMaker,GENRE
+RTS,TOP LEVEL GENRE
+Rugby,THEMES
+Runner,GENRE
+Sailing,THEMES
+Sandbox,GENRE
+Satire,THEMES
+Sci-fi,THEMES
+Science,THEMES
+Score Attack,FEATURE
+Sequel,SOFTWARE
+Sexual Content,THEMES
+Shoot 'Em Up,GENRE
+Shooter,GENRE
+Shop Keeper,THEMES
+Short,FEATURE
+Side Scroller,FEATURE
+Silent Protagonist,THEMES
+Simulation,TOP LEVEL GENRE
+Singleplayer,PLAYER
+Skateboarding,THEMES
+Skating,THEMES
+Skiing,THEMES
+Sniper,THEMES
+Snooker,THEMES
+Snow,THEMES
+Snowboarding,THEMES
+Social Deduction,THEMES
+Software,THEMES
+Software Training,THEMES
+Sokoban,THEMES
+Solitaire,GENRE
+Souls-like,TOP LEVEL GENRE
+Soundtrack,FEATURE
+Space,THEMES
+Space Sim,GENRE
+Spaceships,THEMES
+Spectacle fighter,GENRE
+Spelling,THEMES
+Split Screen,FEATURE
+Sports,GENRE
+Stealth,GENRE
+Steam Machine,HARDWARE
+Steampunk,THEMES
+Story Rich,FEATURE
+Strategy,GENRE
+Strategy RPG,GENRE
+Stylized,VISUALS
+Submarine,THEMES
+Superhero,THEMES
+Supernatural,THEMES
+Surreal,MOODS
+Survival,GENRE
+Survival Horror,GENRE
+Swordplay,THEMES
+Tabletop,GENRE
+Tactical,GENRE
+Tactical RPG,GENRE
+Tanks,THEMES
+Team-Based,FEATURE
+Tennis,THEMES
+Text-Based,FEATURE
+Third-Person Shooter,PLAYER
+Third Person,VIEWPOINT
+Thriller,THEMES
+Time Attack,FEATURE
+Time Management,FEATURE
+Time Manipulation,FEATURE
+Time Travel,THEMES
+Top-Down,VIEWPOINT
+Top-Down Shooter,GENRE
+Touch-Friendly,FEATURE
+Tower Defense,TOP LEVEL GENRE
+TrackIR,
+Trading,GENRE
+Trading Card Game,GENRE
+Traditional Roguelike,GENRE
+Trains,THEMES
+Transhumanism,THEMES
+Transportation,THEMES
+Trivia,THEMES
+Turn-Based,TOP LEVEL GENRE
+Turn-Based Combat,GENRE
+Turn-Based Strategy,GENRE
+Turn-Based Tactics,GENRE
+Tutorial,FEATURE
+Twin Stick Shooter,GENRE
+Typing,FEATURE
+Underground,THEMES
+Underwater,THEMES
+Unforgiving,MOODS
+Utilities,FEATURE
+Vampire,THEMES
+Vehicular Combat,GENRE
+Video Production,SOFTWARE
+Vikings,THEMES
+Villain Protagonist,FEATURE
+Violent,THEMES
+Visual Novel,GENRE
+Voice Control,FEATURE
+Volleyball,THEMES
+Voxel,THEMES
+VR,HARDWARE
+Walking Simulator,GENRE
+War,THEMES
+Wargame,GENRE
+Warhammer 40K,THEMES
+Web Publishing,FUNDING
+Well-Written,FEATURE
+Werewolves,THEMES
+Western,THEMES
+Wholesome,MOODS
+Word Game,GENRE
+World War I,THEMES
+World War II,THEMES
+Wrestling,THEMES
+Zombies,THEMES
