@@ -2,7 +2,9 @@ from utils.db_utils import select_rows, find_new_records, insert_rows, update_ta
 import pandas as pd
 import datetime
 
-def load_records():
+def load_records(dat_ini_val, dat_fin_val):
+    dat_ini_val = dat_ini_val.strftime('%Y-%m-%d')
+    dat_fin_val = dat_fin_val.strftime('%Y-%m-%d')
 
     query = ('select steam_game_pk, tags '
              'from "STAGING".released_game rg '
@@ -20,7 +22,7 @@ def load_records():
     for elem in genres_per_game_list:
         if elem[1] is not None:
             for genre in elem[1].split(";"):
-                bridge_genre.append((elem[0], genres[genres['genre_name'] == genre]['genre_pk'].values[0], '01-01-0001', '9999-12-31'))
+                bridge_genre.append((elem[0], genres[genres['genre_name'] == genre]['genre_pk'].values[0], dat_ini_val, '9999-12-31'))
 
     bridge_genre_df = pd.DataFrame(bridge_genre, columns=['steam_game_pk', 'genre_pk', 'dat_ini_val', 'dat_fin_val'])
 
@@ -35,7 +37,7 @@ def load_records():
     bridge_genre_close_list = bridge_genre_close.values.tolist()
 
     for elem in bridge_genre_close_list:
-        update_query = ('update "DWH".bridge_genre set dat_fin_val='+ "'" + datetime.date.today().strftime('%Y-%m-%d') + "'" +
+        update_query = ('update "DWH".bridge_genre set dat_fin_val='+ "'" + dat_fin_val + "'" +
                         ' where steam_game_pk = ' + str(elem[0]) + ' and genre_pk = ' + str(elem[1]))
 
         update_table(update_query)

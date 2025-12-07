@@ -2,7 +2,9 @@ from utils.db_utils import select_rows, find_new_records, insert_rows, update_ta
 import pandas as pd
 import datetime
 
-def load_records():
+def load_records(dat_ini_val, dat_fin_val):
+    dat_ini_val = dat_ini_val.strftime('%Y-%m-%d')
+    dat_fin_val = dat_fin_val.strftime('%Y-%m-%d')
 
     query = ('select steam_game_pk, developers '
              'from "STAGING".released_game rg '
@@ -20,7 +22,7 @@ def load_records():
     for elem in developers_per_game_list:
         if elem[1] is not None:
             for developer in elem[1].split(";"):
-                bridge_developer.append((elem[0], developers[developers['developer_name'] == developer]['developer_pk'].values[0], '01-01-0001', '9999-12-31'))
+                bridge_developer.append((elem[0], developers[developers['developer_name'] == developer]['developer_pk'].values[0], dat_ini_val, '9999-12-31'))
 
     bridge_developer_df = pd.DataFrame(bridge_developer, columns=['steam_game_pk', 'developer_pk', 'dat_ini_val', 'dat_fin_val'])
 
@@ -35,7 +37,7 @@ def load_records():
     bridge_developer_close_list = bridge_developer_close.values.tolist()
 
     for elem in bridge_developer_close_list:
-        update_query = ('update "DWH".bridge_developer set dat_fin_val=' + "'" + datetime.date.today().strftime('%Y-%m-%d') + "'" +
+        update_query = ('update "DWH".bridge_developer set dat_fin_val=' + "'" + dat_fin_val + "'" +
                         ' where steam_game_pk = ' + str(elem[0]) + ' and developer_pk = ' + str(elem[1]))
 
         update_table(update_query)

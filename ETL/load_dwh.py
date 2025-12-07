@@ -51,10 +51,11 @@ def load_dwh(anno, mese, primo_caricamento):
     last_day_month = monthrange(int(anno), int(mapping_mese[mese]))[1]
     last_day_precedent_month = monthrange(int(anno), int(mapping_mese_precedente[mese]))[1]
 
+    loading_date = datetime.strptime('01/' + mapping_mese[mese] + '/' + anno, "%d/%m/%Y")
     if primo_caricamento:
         start_date = datetime.strptime('01/01/1950', "%d/%m/%Y")
     else:
-        start_date = datetime.strptime('01/' + mapping_mese[mese] + '/' + anno, "%d/%m/%Y")
+        start_date = loading_date
     end_date = datetime.strptime(str(last_day_month) + '/' + mapping_mese[mese] + '/' + anno, "%d/%m/%Y")
 
     if mapping_mese_precedente[mese]!='12':
@@ -77,9 +78,9 @@ def load_dwh(anno, mese, primo_caricamento):
     print("Loading DWH steam game")
     load_record_steam_game()
     print("Loading DWH bridge genres")
-    load_record_bridge_genres()
+    load_record_bridge_genres(loading_date, end_date_precedent_month)
     print("Loading DWH bridge developer")
-    load_record_bridge_developer()
+    load_record_bridge_developer(loading_date, end_date_precedent_month)
     print("Loading DWH deal fact")
     load_record_deal()
     print("Loading DWH game statistics fact")
