@@ -86,7 +86,7 @@ def load_dwh(anno, mese, primo_caricamento):
     print("Loading DWH game statistics fact")
     load_record_game_statistics_fact(start_date, end_date_precedent_month)
     print("Loading DWH player region fact")
-    load_record_player_region_fact()
+    load_record_player_region_fact(loading_date)
 
     return None
 

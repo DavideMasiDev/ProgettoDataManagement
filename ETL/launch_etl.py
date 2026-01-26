@@ -1,8 +1,10 @@
 import sys
 from load_staging import load_staging
+from load_dwh import load_dwh
+from load_datamart import load_datamart
 
 # TODO: add your key here
-SCRAPER_API_KEY = "your_api_key"
+SCRAPER_API_KEY = "cae48f2d7db01e9403cce10a083597c6e3b49696"
 
 def main():
     anno, mese, _primo_caricamento = sys.argv[1:]
@@ -14,7 +16,13 @@ def main():
         print(f"-------------------------------------------------------\n")
         return
 
+    print("Inizio caricamento STAGING: " + mese + " " + anno)
     load_staging(anno, mese, primo_caricamento, SCRAPER_API_KEY)
+    print("Fine caricamento STAGING: " + mese + " " + anno)
+
+    print("Inizio caricamento DWH: " + mese + " " + anno)
+    load_dwh(anno, mese, primo_caricamento)
+    print("Fine caricamento DWH: " + mese + " " + anno)
 
 if __name__ == "__main__":
     main()

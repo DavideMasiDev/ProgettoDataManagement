@@ -1,9 +1,9 @@
 from utils.db_utils import select_rows, find_new_records, insert_rows, update_table
 import datetime
 
-def load_records():
-    today = datetime.date.today().strftime('%Y-%m-%d')
-    query = (f'select player_pk, steam_game_pk, \'{today}\' as dat_ini_val, \'9999-12-31\' as dat_fin_val'
+def load_records(loading_date):
+    # today = datetime.date.today().strftime('%Y-%m-%d')
+    query = (f'select player_pk, steam_game_pk, \'{loading_date}\' as dat_ini_val, \'9999-12-31\' as dat_fin_val'
              ' from "STAGING".game_player_region gpr'
              ' join "DWH".player p on gpr.player_steamid = p.player_steamid'
              ' join "DWH".steam_game sg on gpr.steam_appid = sg.steam_appid')
