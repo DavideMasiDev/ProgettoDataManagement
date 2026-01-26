@@ -10,6 +10,7 @@ truncate table "DWH".player_region_fact;
 truncate table "DWH".game_statistics_fact;
 truncate table "DWH".deal_fact;
 
+truncate table "DWH"."date" cascade;
 
 truncate table "DATAMART".currency;
 truncate table "DATAMART".player;

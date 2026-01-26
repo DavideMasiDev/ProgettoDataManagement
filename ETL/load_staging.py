@@ -25,3 +25,10 @@ def load_staging(anno, mese, primo_caricamento, apy_key):
     load_records_price_history(games, primo_caricamento, apy_key)
 
     return None
+
+def main():
+    load_staging('2025', 'DICEMBRE', True)
+
+
+if __name__ == '__main__':
+    main()

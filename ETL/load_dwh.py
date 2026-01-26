@@ -92,7 +92,7 @@ def load_dwh(anno, mese, primo_caricamento):
 
 
 def main():
-    load_dwh('2025', 'AGOSTO', True)
+    load_dwh('2025', 'DICEMBRE', True)
 
 
 if __name__ == '__main__':

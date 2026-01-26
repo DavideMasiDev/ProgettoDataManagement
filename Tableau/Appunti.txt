@@ -1,0 +1,20 @@
+TOP 50 GIOCHI
+- Rivedere filtro sul campo game_name: considerare di abbassare il limite di 40.000 total_reviews
+- Rivedere colori
+- Rivedere intestazioni
+- Rivedere pop-up info
+
+ANDAMENTO INDIE
+- Rivedere colori
+- Rivedere intestazioni
+- Rivedere pop-up info
+
+
+-- MODIFICHE SOFTWARE
+
+-In staging ripulire estimated_revenue -> Inserire 0 quando NULL
+-In staging ripulire anche il numero di recensioni (positivo e negativo)
+
+-- MODIFICHE DASHBOARDS
+
+- Coppie Generi: le numeriche del primo foglio non combaciano con il secondo

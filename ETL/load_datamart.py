@@ -57,12 +57,11 @@ def load_datamart(data_inizio_periodo, data_fine_periodo):
     print("Loading DATAMART game_statistics_fact")
     load_records_game_statistics_fact(data_inizio_periodo, data_fine_periodo)
 
-
     return None
 
 
 def main():
-    load_datamart('2025-08-01', '2025-08-31')
+    load_datamart('2025-12-01', '2025-12-31')
 
 if __name__ == "__main__":
     main()
