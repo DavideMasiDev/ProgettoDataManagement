@@ -67,13 +67,6 @@ create table "DATAMART".currency (
 	currency_code char(3) not null
 );
 
-create table "DATAMART".player (
-	player_pk bigint primary key,
-	player_steamid bigint not null,
-	region text not null,
-	country_code varchar(2) not null
-);
-
 -- CREATE FATTI
 
 drop table if exists "DATAMART".deal_fact;
@@ -109,7 +102,7 @@ create table "DATAMART".game_statistics_fact (
 
 
 create table "DATAMART".player_region_fact (
-	player_region_pk bigint primary key,
+	player_region_pk bigserial primary key,
 	steam_game_pk bigint not null,
 	player_counter bigint not null,
 	region text not null,
