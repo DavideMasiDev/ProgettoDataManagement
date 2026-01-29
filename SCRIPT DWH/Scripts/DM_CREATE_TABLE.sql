@@ -110,8 +110,10 @@ create table "DATAMART".game_statistics_fact (
 
 create table "DATAMART".player_region_fact (
 	player_region_pk bigint primary key,
-	player_pk bigint not null,
 	steam_game_pk bigint not null,
+	player_counter bigint not null,
+	region text not null,
+	country_code varchar(2) not null,
 	dat_ini_val date not null,
 	dat_fin_val date not null
 );

@@ -5,6 +5,7 @@ ETL/clean_sources/*
 ETL/raw_sources/GAME_PLAYER_REGION
 ETL/raw_sources/RAW_DATA
 ETL/raw_sources/RELEASED_GAMES
+ETL/raw_sources/PRICE_HISTORY
 *.idea
 SCRIPT DWH/.dbeaver/*
 SCRIPT DWH/.project
