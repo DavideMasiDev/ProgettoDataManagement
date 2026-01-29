@@ -21,7 +21,7 @@ def load_datamart(data_inizio_periodo, data_fine_periodo):
     truncate_table("DATAMART", "bridge_developer")
     truncate_table("DATAMART", "steam_game")
     truncate_table("DATAMART", "developer")
-    truncate_table("DATAMART", "player")
+    # truncate_table("DATAMART", "player") Tabella eliminata
     truncate_table("DATAMART", "date")
     truncate_table("DATAMART", "shop")
     truncate_table("DATAMART", "currency")
@@ -43,7 +43,7 @@ def load_datamart(data_inizio_periodo, data_fine_periodo):
     print("Loading DATAMART steam game")
     load_records_steam_game()
     print("Loading DATAMART player")
-    load_records_player()
+    # load_records_player() Tabella eliminata
     print("Loading DATAMART developer")
     load_records_developer()
     print("Loading DATAMART deals")
