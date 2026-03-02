@@ -89,11 +89,3 @@ def load_dwh(anno, mese, primo_caricamento):
     load_record_player_region_fact(loading_date)
 
     return None
-
-
-def main():
-    load_dwh('2025', 'DICEMBRE', True)
-
-
-if __name__ == '__main__':
-    main()

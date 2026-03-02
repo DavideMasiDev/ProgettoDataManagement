@@ -4,7 +4,7 @@ from load_dwh import load_dwh
 from load_datamart import load_datamart
 
 # TODO: add your key here
-SCRAPER_API_KEY = "cae48f2d7db01e9403cce10a083597c6e3b49696"
+SCRAPER_API_KEY = "INSERT_YOUR_API_KEY_HERE"
 
 def main():
     anno, mese, _primo_caricamento = sys.argv[1:]
